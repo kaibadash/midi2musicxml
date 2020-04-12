@@ -15,6 +15,7 @@ repositories {
 dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+  implementation("org.thymeleaf:thymeleaf:3.0.11.RELEASE")
 }
 
 tasks.withType<Test> {
