@@ -60,7 +60,7 @@
         <th:block th:if="${note instanceof com.pokosho.midi2musicxml.Note}">
           <pitch>
             <step th:text="${note.noteName()}">C</step>
-            <alter>1</alter>
+            <alter th:text="${note.sharp()}">1</alter>
             <octave th:text="${note.octave}">1</octave>
           </pitch>
           <duration th:text="${note.noteType.durationForMusicXML()}">1</duration>
