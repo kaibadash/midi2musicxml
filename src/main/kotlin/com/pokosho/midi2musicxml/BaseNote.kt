@@ -14,4 +14,8 @@ open class BaseNote(start: Int, end: Int = 0) {
     this.noteType = NoteType.toNoteType((end - start) / baseTick.toDouble())
     println("${this} : ${end-start} ${this.noteType.name}")
   }
+
+  fun duration(): Int {
+    return end - start
+  }
 }

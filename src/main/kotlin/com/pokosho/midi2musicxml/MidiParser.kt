@@ -10,6 +10,8 @@ class MidiParser {
   val META_TEMPO = 0x51
   val NOTE_ON = 0x90
   val NOTE_OFF = 0x80
+  // FIXME: 1小節内の4分音符の数。可変に対応する。
+  val QUOTES_IN_MEASURE = 4
 
   fun parse(pathToMidi: String, lyrics: String) {
     val sequence = MidiSystem.getSequence(File(pathToMidi))
@@ -43,7 +45,7 @@ class MidiParser {
       }
     }
 
-    val restNotes = addRestNotes(notes).map {
+    val restNotes = RestNote.addRestNotes(notes).map {
       it.calculateNoteType(sequence.resolution)
       it
     }
@@ -51,31 +53,10 @@ class MidiParser {
     Render().renderTemplate(
       "template.musicxml",
       tempo ?: throw IllegalArgumentException("BPM is not set."),
-      restNotes,
+      Measure.splitMeasures(
+        QUOTES_IN_MEASURE * sequence.resolution, restNotes
+      ),
       "output/test.musicxml"
     )
-  }
-
-  /**
-   * MIDIの空白部分に休符を挿入する
-   */
-  fun addRestNotes(notes: List<Note>): List<BaseNote> {
-    var notesWithRest = mutableListOf<BaseNote>()
-    if (notes.size == 0) return notes
-    // 先頭が空白のケースを潰しておく
-    if (notes.first().start > 0) {
-      notesWithRest.add(RestNote(0, notes.first().end))
-    }
-
-    notesWithRest.add(notes.first())
-    for (i in 1..notes.size - 1) {
-      val before = notes[i - 1]
-      val current = notes[i]
-      if (before.end != current.start) {
-        notesWithRest.add(RestNote(before.end, current.start))
-      }
-      notesWithRest.add(current)
-    }
-    return notesWithRest
   }
 }

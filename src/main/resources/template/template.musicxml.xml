@@ -33,7 +33,7 @@
 
   <part id="P1">
 
-    <measure number="1">
+    <measure number="1" th:each="measure : ${measures}">
 
       <direction placement="above">
         <direction-type>
@@ -45,7 +45,7 @@
         <sound th:attr="tempo=${tempo.bpm()}" tempo="300"/>
       </direction>
 
-      <note th:each="note : ${notes}">
+      <note th:each="note : ${measure.notes()}">
         <th:block th:if="${note instanceof com.pokosho.midi2musicxml.Note}">
           <pitch>
             <step th:text="${note.noteName()}">C</step>
