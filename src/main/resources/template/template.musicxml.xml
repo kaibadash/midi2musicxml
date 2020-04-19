@@ -35,6 +35,17 @@
 
     <measure number="1" th:each="measure : ${measures}">
 
+      <attributes>
+        <divisions>2</divisions>
+        <key>
+          <fifths>0</fifths>
+        </key>
+        <clef>
+          <sign>G</sign>
+          <line>2</line>
+        </clef>
+      </attributes>
+
       <direction placement="above">
         <direction-type>
           <metronome parentheses="no">
@@ -52,7 +63,7 @@
             <alter>1</alter>
             <octave th:text="${note.octave}">1</octave>
           </pitch>
-          <duration>4</duration>
+          <duration th:text="${note.noteType.durationForMusicXML()}">1</duration>
           <voice>1</voice>
           <type th:text="${note.noteType.type}">half</type>
           <stem>down</stem>
@@ -64,7 +75,7 @@
 
         <th:block th:if="${note instanceof com.pokosho.midi2musicxml.RestNote}">
           <rest/>
-          <duration>4</duration>
+          <duration th:text="${note.noteType.durationForMusicXML()}">1</duration>
           <voice>1</voice>
           <type th:text="${note.noteType.type}">half</type>
         </th:block>
