@@ -7,10 +7,12 @@ import java.io.FileWriter
 import java.io.Writer
 
 class Render() {
-  fun renderTemplate(template: String, notes: List<Note>, outputPath: String) {
+  @ExperimentalUnsignedTypes
+  fun renderTemplate(template: String, tempo: Tempo, notes: List<Note>, outputPath: String) {
     val engine: TemplateEngine = initializeTemplateEngine()
     val context: Context = Context()
     context.setVariable("notes", notes)
+    context.setVariable("tempo", tempo)
     val writer: Writer = FileWriter(outputPath)
     engine.process(template, context, writer)
     writer.close()

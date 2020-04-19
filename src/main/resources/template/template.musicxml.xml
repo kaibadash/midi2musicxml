@@ -33,8 +33,20 @@
 
   <part id="P1">
 
-    <measure th:each="note : ${notes}" number="1">
-      <note>
+    <measure number="1">
+
+      <direction placement="above">
+        <direction-type>
+          <metronome parentheses="no">
+            <beat-unit>quarter</beat-unit>
+            <per-minute th:text="${tempo.bpm()}">300</per-minute>
+          </metronome>
+        </direction-type>
+        <sound th:attr="tempo=${tempo.bpm()}" tempo="300"/>
+      </direction>
+
+
+      <note th:each="note : ${notes}">
         <pitch>
           <step th:text="${note.noteName()}">C</step>
           <alter>1</alter>
