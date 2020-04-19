@@ -47,20 +47,34 @@
 
 
       <note th:each="note : ${notes}">
-        <pitch>
-          <step th:text="${note.noteName()}">C</step>
-          <alter>1</alter>
-          <octave th:text="${note.octave}">1</octave>
-        </pitch>
-        <duration>4</duration>
-        <voice>1</voice>
-        <type th:text="${note.noteType.type}">half</type>
-        <stem>down</stem>
-        <lyric number="1">
-          <syllabic>single</syllabic>
-          <text th:utext="${note.lyric}">歌詞</text>
-        </lyric>
+        <th:block th:if="${note instanceof com.pokosho.midi2musicxml.Note}">
+          <pitch>
+            <step th:text="${note.noteName()}">C</step>
+            <alter>1</alter>
+            <octave th:text="${note.octave}">1</octave>
+          </pitch>
+          <duration>4</duration>
+          <voice>1</voice>
+          <type th:text="${note.noteType.type}">half</type>
+          <stem>down</stem>
+          <lyric number="1">
+            <syllabic>single</syllabic>
+            <text th:utext="${note.lyric}">歌詞</text>
+          </lyric>
+        </th:block>
+
+        <th:block th:if="${note instanceof com.pokosho.midi2musicxml.RestNote}">
+          <note>
+            <rest/>
+            <duration>4</duration>
+            <voice>1</voice>
+            <type th:text="${note.noteType.type}">half</type>
+          </note>
+        </th:block>
       </note>
+
+
+
     </measure>
 
   </part>

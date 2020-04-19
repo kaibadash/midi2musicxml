@@ -8,7 +8,7 @@ import java.io.Writer
 
 class Render() {
   @ExperimentalUnsignedTypes
-  fun renderTemplate(template: String, tempo: Tempo, notes: List<Note>, outputPath: String) {
+  fun renderTemplate(template: String, tempo: Tempo, notes: List<BaseNote>, outputPath: String) {
     val engine: TemplateEngine = initializeTemplateEngine()
     val context: Context = Context()
     context.setVariable("notes", notes)
