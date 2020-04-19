@@ -1,6 +1,7 @@
 package com.pokosho.midi2musicxml
 
 import java.io.File
+import java.lang.IllegalArgumentException
 import javax.sound.midi.MetaMessage
 import javax.sound.midi.MidiEvent
 import javax.sound.midi.MidiSystem
@@ -45,10 +46,14 @@ class Test {
         }
       }
     }
-    Render().renderTemplate("template.musicxml", notes, "output/test.musicxml")
+    Render().renderTemplate(
+      "template.musicxml",
+      tempo ?: throw IllegalArgumentException("BPM is not set."),
+      notes,
+      "output/test.musicxml")
   }
 }
 
 fun main() {
-  Test().main("sample/120bpm_c3.mid", "うほうほはふはふうまうま")
+  Test().main("sample/120bpm_c3.mid", "しまうまたべたい")
 }
