@@ -44,7 +44,7 @@ class MidiParser {
     }
 
     val restNotes = addRestNotes(notes).map {
-      it.calculateNoteType(sequence.tickLength)
+      it.calculateNoteType(sequence.resolution)
       it
     }
 
@@ -63,7 +63,7 @@ class MidiParser {
     var notesWithRest = mutableListOf<BaseNote>()
     if (notes.size == 0) return notes
     // 先頭が空白のケースを潰しておく
-    if (notes.first().start == 0) {
+    if (notes.first().start > 0) {
       notesWithRest.add(RestNote(0, notes.first().end))
     }
 

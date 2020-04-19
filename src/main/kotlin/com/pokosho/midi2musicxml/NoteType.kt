@@ -1,7 +1,6 @@
 package com.pokosho.midi2musicxml
 
-import java.lang.IllegalArgumentException
-import java.util.Comparator
+import java.util.*
 
 /**
  * @see https://github.com/w3c/musicxml/blob/8bbe8e50606bf99317a86e9e1637618d6bdd1997/schema/note.mod#L223

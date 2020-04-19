@@ -5,7 +5,7 @@ import javax.sound.midi.ShortMessage
 /**
  * 1つの音符を表す
  */
-class Note(message: ShortMessage, lyric: Char, start: Int, end: Int = 0): BaseNote(start, end) {
+class Note(message: ShortMessage, lyric: Char, start: Int, end: Int = 0) : BaseNote(start, end) {
   var lyric: Char = 'あ'
   var key: Int = 0
   var octave: Int = 0

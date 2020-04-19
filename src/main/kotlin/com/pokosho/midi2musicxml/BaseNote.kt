@@ -10,7 +10,8 @@ open class BaseNote(start: Int, end: Int = 0) {
     this.end = end
   }
 
-  fun calculateNoteType(baseTick: Long) {
-    this.noteType = NoteType.toNoteType(baseTick.toDouble() / (end - start))
+  fun calculateNoteType(baseTick: Int) {
+    this.noteType = NoteType.toNoteType((end - start) / baseTick.toDouble())
+    println("${this} : ${end-start} ${this.noteType.name}")
   }
 }

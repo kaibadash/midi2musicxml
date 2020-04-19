@@ -45,7 +45,6 @@
         <sound th:attr="tempo=${tempo.bpm()}" tempo="300"/>
       </direction>
 
-
       <note th:each="note : ${notes}">
         <th:block th:if="${note instanceof com.pokosho.midi2musicxml.Note}">
           <pitch>
@@ -64,18 +63,13 @@
         </th:block>
 
         <th:block th:if="${note instanceof com.pokosho.midi2musicxml.RestNote}">
-          <note>
-            <rest/>
-            <duration>4</duration>
-            <voice>1</voice>
-            <type th:text="${note.noteType.type}">half</type>
-          </note>
+          <rest/>
+          <duration>4</duration>
+          <voice>1</voice>
+          <type th:text="${note.noteType.type}">half</type>
         </th:block>
       </note>
 
-
-
     </measure>
-
   </part>
 </score-partwise>
