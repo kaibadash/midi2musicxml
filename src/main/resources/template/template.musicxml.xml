@@ -33,7 +33,18 @@
 
   <part id="P1">
 
-    <measure number="1">
+    <measure number="1" th:each="measure : ${measures}">
+
+      <attributes>
+        <divisions>2</divisions>
+        <key>
+          <fifths>0</fifths>
+        </key>
+        <clef>
+          <sign>G</sign>
+          <line>2</line>
+        </clef>
+      </attributes>
 
       <direction placement="above">
         <direction-type>
@@ -45,23 +56,31 @@
         <sound th:attr="tempo=${tempo.bpm()}" tempo="300"/>
       </direction>
 
+      <note th:each="note : ${measure.notes()}">
+        <th:block th:if="${note instanceof com.pokosho.midi2musicxml.Note}">
+          <pitch>
+            <step th:text="${note.noteName()}">C</step>
+            <alter>1</alter>
+            <octave th:text="${note.octave}">1</octave>
+          </pitch>
+          <duration th:text="${note.noteType.durationForMusicXML()}">1</duration>
+          <voice>1</voice>
+          <type th:text="${note.noteType.type}">half</type>
+          <stem>down</stem>
+          <lyric number="1">
+            <syllabic>single</syllabic>
+            <text th:utext="${note.lyric}">歌詞</text>
+          </lyric>
+        </th:block>
 
-      <note th:each="note : ${notes}">
-        <pitch>
-          <step th:text="${note.noteName()}">C</step>
-          <alter>1</alter>
-          <octave th:text="${note.octave}">1</octave>
-        </pitch>
-        <duration>4</duration>
-        <voice>1</voice>
-        <type th:text="${note.noteType.type}">half</type>
-        <stem>down</stem>
-        <lyric number="1">
-          <syllabic>single</syllabic>
-          <text th:utext="${note.lyric}">歌詞</text>
-        </lyric>
+        <th:block th:if="${note instanceof com.pokosho.midi2musicxml.RestNote}">
+          <rest/>
+          <duration th:text="${note.noteType.durationForMusicXML()}">1</duration>
+          <voice>1</voice>
+          <type th:text="${note.noteType.type}">half</type>
+        </th:block>
       </note>
-    </measure>
 
+    </measure>
   </part>
 </score-partwise>

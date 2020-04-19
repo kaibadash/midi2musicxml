@@ -1,7 +1,10 @@
 #!/bin/bash
+
+# exmample: ./run.sh output/test.musicxml
+
 # Project settings
 NEUTRINO_DIR=/Applications/NEUTRINO
-BASENAME=sample1
+BASENAME=test
 NumThreads=3
 
 # musicXML_to_label
@@ -15,7 +18,7 @@ PitchShift=1.0
 FormantShift=1.0
 
 input="`pwd`/$1"
-cd `dirname $NEUTRINO_DIR`
+cd $NEUTRINO_DIR
 
 echo "input: $input"
 
