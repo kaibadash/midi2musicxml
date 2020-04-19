@@ -16,6 +16,7 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
   implementation("org.thymeleaf:thymeleaf:3.0.11.RELEASE")
+  implementation("org.slf4j:slf4j-log4j12:1.7.30")
 }
 
 tasks.withType<Test> {

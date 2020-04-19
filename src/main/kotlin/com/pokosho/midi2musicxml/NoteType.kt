@@ -1,7 +1,6 @@
 package com.pokosho.midi2musicxml
 
-import java.lang.IllegalArgumentException
-import java.util.Comparator
+import java.util.*
 
 /**
  * @see https://github.com/w3c/musicxml/blob/8bbe8e50606bf99317a86e9e1637618d6bdd1997/schema/note.mod#L223
@@ -36,6 +35,28 @@ enum class NoteType(val type: String) {
       // 近似値を探す
       val key = beat2note.keys.stream().min(Comparator.comparing { x: Double -> Math.abs(x - beat) }).get()
       return beat2note[key] ?: throw IllegalArgumentException("NoteType is not found against beat(${beat})")
+    }
+  }
+
+  /**
+   * musicxmlのdurationはeighthが1
+   */
+  fun durationForMusicXML(): Double {
+    return when(this) {
+      NOTE_TYPE_1024TH -> { (0.12 / 2 / 2 / 2) }
+      NOTE_TYPE_512TH -> { (0.12 / 2 / 2 / 2) }
+      NOTE_TYPE_256TH -> { (0.12 / 2 / 2 / 2) }
+      NOTE_TYPE_128TH -> { (0.12 / 2 / 2 / 2) }
+      NOTE_TYPE_64TH -> { (0.12 / 2 / 2 / 2) }
+      NOTE_TYPE_32ND -> { (0.12 / 2 / 2 / 2) }
+      NOTE_TYPE_16TH -> { (1 / 2).toDouble() }
+      NOTE_TYPE_EIGHTH -> { 1.toDouble() }
+      NOTE_TYPE_QUARTER -> { 2.toDouble() }
+      NOTE_TYPE_HALF -> { 4.toDouble() }
+      NOTE_TYPE_WHOLE -> { 8.toDouble() }
+      NOTE_TYPE_BREVE -> { 16.toDouble() }
+      NOTE_TYPE_LONG -> { 32.toDouble() }
+      NOTE_TYPE_MAXIMA -> { 64.toDouble() }
     }
   }
 }
