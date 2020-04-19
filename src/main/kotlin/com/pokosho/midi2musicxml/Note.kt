@@ -25,7 +25,11 @@ class Note(message: ShortMessage, lyric: Char, start: Int, end: Int = 0) : BaseN
   }
 
   fun noteName(): String {
-    return NOTE_NAMES[note]
+    return NOTE_NAMES[note].replace("#", "")
+  }
+
+  fun sharp(): Int {
+    return if (NOTE_NAMES[note].contains("#")) 1 else 0
   }
 
   override fun toString(): String {
