@@ -2,6 +2,7 @@ package com.pokosho.midi2musicxml
 
 import java.io.InputStream
 
+// TODO
 class Lyric {
   constructor(pathToFile: String) {
 
@@ -11,8 +12,8 @@ class Lyric {
 
   }
 
-  fun warnings(): List<String> {
-    return listOf<String>("")
+  fun warnings(): Array<String> {
+    return arrayOf()
   }
 
   private fun toHiragana(): String {
@@ -20,6 +21,6 @@ class Lyric {
   }
 
   override fun toString(): String {
-    return ""
+    return "ももんがももんがももんがもん"
   }
 }

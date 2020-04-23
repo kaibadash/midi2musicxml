@@ -13,7 +13,7 @@ class MidiParser {
   // FIXME: 1小節内の4分音符の数。可変に対応する。
   val QUOTES_IN_MEASURE = 4
 
-  fun parse(pathToMidi: String, lyrics: String): String {
+  fun generateXML(pathToMidi: String, lyrics: String, outputPath: String?): String {
     val sequence = MidiSystem.getSequence(File(pathToMidi))
     val notes = arrayListOf<Note>()
     var tempo: Tempo? = null
@@ -50,7 +50,7 @@ class MidiParser {
       it
     }
 
-    val output = "output/test.musicxml" // TODO: set output path
+    val output = outputPath ?: "${pathToMidi}.musicxml"
     Render().renderTemplate(
       "template.musicxml",
       tempo ?: throw IllegalArgumentException("BPM is not set."),
@@ -63,6 +63,6 @@ class MidiParser {
   }
 
   fun warnings(): List<String> {
-    return listOf<String>("")
+    return listOf("")
   }
 }
