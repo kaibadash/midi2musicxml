@@ -24,9 +24,9 @@ class Params(args: Array<String>, inputStream: InputStream) {
       showHelp = true
     }
 
-    this.midiFile = args[1]
+    this.midiFile = args[0]
     if (!File(midiFile).exists()) {
-      throw IllegalArgumentException("A midi file ${args[1]} is not found.")
+      throw IllegalArgumentException("A midi file ${midiFile} is not found.")
     }
     this.lyricFile = getOptionValue(args, "-t")
     if (lyricFile.isNotBlank() && !File(lyricFile).exists()) {
@@ -34,7 +34,11 @@ class Params(args: Array<String>, inputStream: InputStream) {
     }
     this.callNeutrino = args.filter { it == "-n" }.isNotEmpty()
     this.silent = args.filter { it == "-s" }.isNotEmpty()
-    this.outputPath = getOptionValue(args, "-o")
+    this.outputPath = getOptionValue(args, "-o", midiFile + ".musicxml")
+    if (outputPath?.endsWith(".musicxml") == false) {
+      throw IllegalArgumentException("An output file ${outputPath} doesn't end with .musicxml")
+    }
+
     analyzeLyric(inputStream)
   }
 
@@ -43,13 +47,13 @@ class Params(args: Array<String>, inputStream: InputStream) {
     return lyric.toString()
   }
 
-  private fun getOptionValue(args: Array<String>, option: String): String {
+  private fun getOptionValue(args: Array<String>, option: String, default: String = ""): String {
     args.forEachIndexed { index, it ->
       if (it == option) {
-        return args.elementAtOrElse(index + 1) { "" }
+        return args.elementAtOrElse(index + 1) { default }
       }
     }
-    return ""
+    return default
   }
 
   private fun analyzeLyric(inputStream: InputStream) {
