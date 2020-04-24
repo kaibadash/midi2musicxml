@@ -42,21 +42,49 @@ enum class NoteType(val type: String) {
    * musicxmlのdurationはeighthが1
    */
   fun durationForMusicXML(): Double {
-    return when(this) {
-      NOTE_TYPE_1024TH -> { (0.12 / 2 / 2 / 2) }
-      NOTE_TYPE_512TH -> { (0.12 / 2 / 2 / 2) }
-      NOTE_TYPE_256TH -> { (0.12 / 2 / 2 / 2) }
-      NOTE_TYPE_128TH -> { (0.12 / 2 / 2 / 2) }
-      NOTE_TYPE_64TH -> { (0.12 / 2 / 2 / 2) }
-      NOTE_TYPE_32ND -> { (0.12 / 2 / 2 / 2) }
-      NOTE_TYPE_16TH -> { (1.0 / 2) }
-      NOTE_TYPE_EIGHTH -> { 1.toDouble() }
-      NOTE_TYPE_QUARTER -> { 2.toDouble() }
-      NOTE_TYPE_HALF -> { 4.toDouble() }
-      NOTE_TYPE_WHOLE -> { 8.toDouble() }
-      NOTE_TYPE_BREVE -> { 16.toDouble() }
-      NOTE_TYPE_LONG -> { 32.toDouble() }
-      NOTE_TYPE_MAXIMA -> { 64.toDouble() }
+    return when (this) {
+      NOTE_TYPE_1024TH -> {
+        (0.12 / 2 / 2 / 2)
+      }
+      NOTE_TYPE_512TH -> {
+        (0.12 / 2 / 2 / 2)
+      }
+      NOTE_TYPE_256TH -> {
+        (0.12 / 2 / 2 / 2)
+      }
+      NOTE_TYPE_128TH -> {
+        (0.12 / 2 / 2 / 2)
+      }
+      NOTE_TYPE_64TH -> {
+        (0.12 / 2 / 2 / 2)
+      }
+      NOTE_TYPE_32ND -> {
+        (0.12 / 2 / 2 / 2)
+      }
+      NOTE_TYPE_16TH -> {
+        (1.0 / 2)
+      }
+      NOTE_TYPE_EIGHTH -> {
+        1.toDouble()
+      }
+      NOTE_TYPE_QUARTER -> {
+        2.toDouble()
+      }
+      NOTE_TYPE_HALF -> {
+        4.toDouble()
+      }
+      NOTE_TYPE_WHOLE -> {
+        8.toDouble()
+      }
+      NOTE_TYPE_BREVE -> {
+        16.toDouble()
+      }
+      NOTE_TYPE_LONG -> {
+        32.toDouble()
+      }
+      NOTE_TYPE_MAXIMA -> {
+        64.toDouble()
+      }
     }
   }
 }
