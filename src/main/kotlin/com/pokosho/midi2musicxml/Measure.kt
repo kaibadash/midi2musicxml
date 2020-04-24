@@ -1,7 +1,5 @@
 package com.pokosho.midi2musicxml
 
-import java.lang.IllegalArgumentException
-
 /**
  * 1つの小節を表す
  */
