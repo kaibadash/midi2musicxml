@@ -3,7 +3,6 @@ package com.pokosho.midi2musicxml.cui
 import com.pokosho.midi2musicxml.Lyric
 import java.io.File
 import java.io.InputStream
-import java.lang.IllegalArgumentException
 
 class Params(args: Array<String>, inputStream: InputStream) {
   var showHelp = false

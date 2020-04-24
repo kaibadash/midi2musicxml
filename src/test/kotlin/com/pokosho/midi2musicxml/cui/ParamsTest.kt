@@ -3,10 +3,10 @@ package com.pokosho.midi2musicxml.cui
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import java.lang.IllegalArgumentException
 
 class ParamsTest {
   val midi = "src/test/resources/test_short.mid"
+
   @Test
   fun testNoParams() {
     val command = ""
@@ -29,7 +29,7 @@ class ParamsTest {
     Assertions.assertFalse(params.showHelp)
     Assertions.assertFalse(params.silent)
     Assertions.assertEquals(params.lyric!!.toString(), "")
-    Assertions.assertEquals(params.lyricFile , "")
+    Assertions.assertEquals(params.lyricFile, "")
     Assertions.assertEquals(params.outputPath, command + ".musicxml")
   }
 
