@@ -13,12 +13,12 @@ class Cui(val args: Array<String>) {
       params = Params(args, System.`in`)
     } catch (e: IllegalArgumentException) {
       System.err.println(e.message)
-      help()
+      println(Params.help())
       return -1
     }
 
     if (params.showHelp) {
-      help()
+      println(Params.help())
       return 0
     }
 
@@ -32,23 +32,6 @@ class Cui(val args: Array<String>) {
     }
     // TODO: call neutrino and set output
     return 0
-  }
-
-  private fun help() {
-    println("""
-midi2musicxml [ path to midi ] [ STDIN ] [ options ]
-
-OPTIONS
--t path/to/lyric_text
--o path/to/output
-  Write musicxml to the specified path. By default, the output is [path to mid].musicxml.
--n
-  Call NEUTRINO. You must set NEUTRINO_HOME environment.
--s
-  Ignore warnings.
---help
-  Print help.
-""")
   }
 }
 
