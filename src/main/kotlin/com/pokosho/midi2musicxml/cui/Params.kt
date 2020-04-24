@@ -12,7 +12,7 @@ class Params(args: Array<String>, inputStream: InputStream) {
   var lyricFile: String = ""
   var midiFile: String = ""
   var warnings = mutableListOf<String>()
-  var lyric: Lyric? = null
+  var lyric: Lyric = Lyric()
   var outputPath: String? = null
 
   companion object {
@@ -47,25 +47,24 @@ OPTIONS
 
       this.midiFile = args[0]
       if (!File(midiFile).exists()) {
-        throw IllegalArgumentException("A midi file ${midiFile} is not found.")
+        throw IllegalArgumentException("A midi file $midiFile is not found.")
       }
       this.lyricFile = getOptionValue(args, "-t")
       if (lyricFile.isNotBlank() && !File(lyricFile).exists()) {
-        throw IllegalArgumentException("A text file ${lyricFile} is not found.")
+        throw IllegalArgumentException("A text file $lyricFile is not found.")
       }
       this.callNeutrino = args.filter { it == "-n" }.isNotEmpty()
       this.silent = args.filter { it == "-s" }.isNotEmpty()
       this.outputPath = getOptionValue(args, "-o", midiFile + ".musicxml")
       if (outputPath?.endsWith(".musicxml") == false) {
-        throw IllegalArgumentException("An output file ${outputPath} doesn't end with .musicxml")
+        throw IllegalArgumentException("An output file $outputPath doesn't end with .musicxml")
       }
 
-      analyzeLyric(inputStream)
+      analyzeLyric(lyricFile, inputStream)
     }
   }
 
   fun lyric(): String {
-    this.lyric ?: throw IllegalArgumentException("Lyric is not set")
     return lyric.toString()
   }
 
@@ -78,15 +77,19 @@ OPTIONS
     return default
   }
 
-  private fun analyzeLyric(inputStream: InputStream) {
-    this.lyric = if (lyricFile.isNotBlank()) {
-      Lyric(lyricFile)
-    } else {
-      Lyric(inputStream)
+  private fun analyzeLyric(lyricFile: String, inputStream: InputStream) {
+    if (lyricFile.isNotBlank()) {
+      this.lyric = Lyric(lyricFile)
     }
+    if (inputStream.available() > 0) {
+      this.lyric = Lyric(inputStream)
+    }
+
     if (silent) return
-    this.warnings.addAll(
-      (this.lyric ?: throw IllegalArgumentException("Lyric is not set")).warnings()
-    )
+    if (lyric.toString().isEmpty()) {
+      this.warnings.add("Lyric is not set")
+      return
+    }
+    this.warnings.addAll(lyric.warnings())
   }
 }

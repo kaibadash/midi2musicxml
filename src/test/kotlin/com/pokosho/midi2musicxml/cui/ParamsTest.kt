@@ -28,17 +28,16 @@ class ParamsTest {
     val params = Params(command.split(" ").toTypedArray(), System.`in`)
     Assertions.assertFalse(params.showHelp)
     Assertions.assertFalse(params.silent)
-    // Assertions.assertEquals(params.lyric!!.toString(), "")
+    Assertions.assertEquals(params.lyric!!.toString(), "")
     Assertions.assertEquals(params.lyricFile , "")
     Assertions.assertEquals(params.outputPath, command + ".musicxml")
-    Assertions.assertTrue(params.warnings.isEmpty())
   }
 
   @Test
   fun testWithLyric() {
     val command = "$midi -t src/test/resources/test_short.txt"
     val params = Params(command.split(" ").toTypedArray(), System.`in`)
-    // Assertions.assertEquals(params.lyric!!.toString(), "うい")
+    Assertions.assertEquals("うい", params.lyric.toString())
   }
 
   @Test
