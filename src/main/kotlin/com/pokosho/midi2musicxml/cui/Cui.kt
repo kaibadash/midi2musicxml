@@ -26,8 +26,7 @@ class Cui(val args: Array<String>) {
     parser.parse(params.midiFile, params.lyric())
 
     if (!params.silent) {
-      parser.warnings().forEach { System.err.println(it) }
-      parser.warnings().forEach { System.err.println(it) }
+      (params.warnings + parser.warnings).forEach { System.err.println(it) }
     }
 
     parser.generateXML(params.outputPath)

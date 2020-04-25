@@ -20,6 +20,7 @@ class MidiParser {
   var notes: List<BaseNote> = mutableListOf<BaseNote>()
   var resolution: Int = 0
   var lyric = ""
+  val warnings = mutableListOf<String>()
 
   fun parse(pathToMidi: String, lyric: String) {
     val sequence = MidiSystem.getSequence(File(pathToMidi))
@@ -27,6 +28,9 @@ class MidiParser {
     this.lyric = lyric
     val notes = arrayListOf<Note>()
     val track = sequence.tracks.first()
+    if (track.size() >= 1) {
+      warnings.add("MIDI has some tracks(${sequence.tracks.size}). Midi2musicxml uses first track.")
+    }
 
     for (i in 0 until track.size()) {
       val event: MidiEvent = track.get(i)
@@ -57,6 +61,7 @@ class MidiParser {
     this.notes = RestNote.addRestNotes(notes).map {
       it.calculateNoteType(resolution)
     }
+    validate()
   }
 
   fun generateXML(outputPath: String) {
@@ -90,8 +95,7 @@ class MidiParser {
     return notes.count { it.octave <= TOO_LOW_OCTAVE } / this.notes.count() * 100
   }
 
-  fun warnings(): List<String> {
-    val warnings = mutableListOf<String>()
+  private fun validate(): List<String> {
     if (notesCount() != lyricCharCount()) {
       warnings.add("Number of notes(${notesCount()}) is not much number of lyric characters (${lyricCharCount()}).")
     }
