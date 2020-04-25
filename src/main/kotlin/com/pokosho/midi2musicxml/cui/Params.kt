@@ -17,12 +17,13 @@ class Params(args: Array<String>, inputStream: InputStream) {
   companion object {
     fun help(): String {
       return """
-midi2musicxml [ path to midi ] [ STDIN ] [ options ]
+midi2musicxml [midi file] [options]
 
 OPTIONS
--t path/to/lyric_text
--o path/to/output
-  Write musicxml to the specified path. By default, the output is [path to mid].musicxml.
+-t input-text-file-lyrics
+  Specify a input file of lyrics. STDIN is read if the file is not specified. 
+-o output-file-xml
+  Specify a path to the output xml file. By default, the output is [path to mid].musicxml.
 -n
   Call NEUTRINO. You must set NEUTRINO_HOME environment.
 -s
