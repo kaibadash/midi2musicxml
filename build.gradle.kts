@@ -30,7 +30,10 @@ tasks.withType<Test> {
 
 tasks.withType<KotlinCompile> {
   kotlinOptions {
-    freeCompilerArgs = listOf("-Xjsr305=strict")
+    freeCompilerArgs = listOf(
+      "-Xjsr305=strict",
+      "-Xopt-in=kotlin.ExperimentalUnsignedTypes"
+    )
     jvmTarget = "1.8"
   }
 }
