@@ -7,7 +7,6 @@ import java.io.FileWriter
 import java.io.Writer
 
 class Render() {
-  @ExperimentalUnsignedTypes
   fun renderTemplate(template: String, tempo: Tempo, measures: List<Measure>, outputPath: String) {
     val engine: TemplateEngine = initializeTemplateEngine()
     val context: Context = Context()

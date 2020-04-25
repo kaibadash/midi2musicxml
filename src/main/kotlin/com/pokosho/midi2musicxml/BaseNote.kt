@@ -10,9 +10,10 @@ abstract class BaseNote(start: Int, end: Int = 0) {
     this.end = end
   }
 
-  fun calculateNoteType(baseTick: Int) {
+  fun calculateNoteType(baseTick: Int): BaseNote {
     this.noteType = NoteType.toNoteType((end - start) / baseTick.toDouble())
     println("${this} : ${end - start} ${this.noteType.name}")
+    return this
   }
 
   fun duration(): Int {

@@ -8,7 +8,7 @@ import com.pokosho.midi2musicxml.MidiParser
  */
 class Cui(val args: Array<String>) {
   fun run(): Int {
-    var params: Params? = null
+    var params: Params?
     try {
       params = Params(args, System.`in`)
     } catch (e: IllegalArgumentException) {
@@ -23,14 +23,18 @@ class Cui(val args: Array<String>) {
     }
 
     val parser = MidiParser()
-    val musicXML = parser.generateXML(params.midiFile, params.lyric(), params.outputPath)
+    parser.parse(params.midiFile, params.lyric())
+
     if (!params.silent) {
-      parser.warnings().forEach { System.err.println(it) }
+      (params.warnings + parser.warnings).forEach { System.err.println(it) }
     }
+
+    parser.generateXML(params.outputPath)
+    println("Completed: ${params.outputPath}")
+    // TODO: call neutrino and set output
     if (!params.callNeutrino) {
       return 0
     }
-    // TODO: call neutrino and set output
     return 0
   }
 }

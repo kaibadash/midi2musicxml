@@ -12,7 +12,7 @@ class Params(args: Array<String>, inputStream: InputStream) {
   var midiFile: String = ""
   var warnings = mutableListOf<String>()
   var lyric: Lyric = Lyric()
-  var outputPath: String? = null
+  var outputPath: String = ""
 
   companion object {
     fun help(): String {
@@ -55,7 +55,7 @@ OPTIONS
       this.callNeutrino = args.filter { it == "-n" }.isNotEmpty()
       this.silent = args.filter { it == "-s" }.isNotEmpty()
       this.outputPath = getOptionValue(args, "-o", midiFile + ".musicxml")
-      if (outputPath?.endsWith(".musicxml") == false) {
+      if (!outputPath.endsWith(".musicxml")) {
         throw IllegalArgumentException("An output file $outputPath doesn't end with .musicxml")
       }
 
