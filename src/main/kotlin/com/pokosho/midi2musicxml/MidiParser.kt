@@ -17,7 +17,7 @@ class MidiParser {
   val WARN_PARCENTAGE = 50
 
   var tempo = Tempo()
-  var notes: List<BaseNote> = mutableListOf<BaseNote>()
+  var notes: List<BaseNote> = mutableListOf()
   var resolution: Int = 0
   var lyric = ""
   val warnings = mutableListOf<String>()
@@ -27,10 +27,11 @@ class MidiParser {
     this.resolution = sequence.resolution
     this.lyric = lyric
     val notes = arrayListOf<Note>()
-    val track = sequence.tracks.first()
-    if (track.size() >= 1) {
+    if (sequence.tracks.size > 2) {
       warnings.add("MIDI has some tracks(${sequence.tracks.size}). Midi2musicxml uses first track.")
     }
+    // 0番目はmeta dataなので1番目を取得
+    val track = sequence.tracks[1]
 
     for (i in 0 until track.size()) {
       val event: MidiEvent = track.get(i)
@@ -48,7 +49,8 @@ class MidiParser {
       println("Channel: ${message.channel} ")
       // MIDIは音の終わりと始まりがイベントとして記録される
       if (message.command == NOTE_ON) {
-        notes.add(Note(message, lyric[notes.count()], event.tick.toInt()))
+        val char = if (lyric.count() > notes.count()) lyric[notes.count()] else null
+        notes.add(Note(message, char, event.tick.toInt()))
         continue
       }
       if (message.command == NOTE_OFF) {
@@ -85,14 +87,16 @@ class MidiParser {
 
   @Suppress("UNCHECKED_CAST")
   fun percentageOfTooHigh(): Int {
+    if (this.notes.count() == 0) return 0
     val notes = notes.filter { it is Note } as? List<Note> ?: return 0
-    return notes.count { it.octave >= TOO_HIGH_OCTAVE } / this.notes.count() * 100
+    return ((notes.count { it.octave >= TOO_HIGH_OCTAVE }.toDouble() / notes.count()) * 100).toInt()
   }
 
   @Suppress("UNCHECKED_CAST")
   fun percentageOfTooLow(): Int {
+    if (this.notes.count() == 0) return 0
     val notes = notes.filter { it is Note } as? List<Note> ?: return 0
-    return notes.count { it.octave <= TOO_LOW_OCTAVE } / this.notes.count() * 100
+    return ((notes.count { it.octave <= TOO_LOW_OCTAVE }.toDouble() / notes.count()) * 100).toInt()
   }
 
   private fun validate(): List<String> {
