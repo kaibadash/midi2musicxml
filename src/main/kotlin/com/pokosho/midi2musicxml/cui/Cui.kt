@@ -23,15 +23,18 @@ class Cui(val args: Array<String>) {
     }
 
     val parser = MidiParser()
-    val musicXML = parser.generateXML(params.midiFile, params.lyric(), params.outputPath)
+    parser.parse(params.midiFile, params.lyric())
+
     if (!params.silent) {
-      parser.warnings().forEach { System.err.println(it) }
+      (params.warnings + parser.warnings).forEach { System.err.println(it) }
     }
+
+    parser.generateXML(params.outputPath)
+    println("Completed: ${params.outputPath}")
+    // TODO: call neutrino and set output
     if (!params.callNeutrino) {
       return 0
     }
-    // TODO: call neutrino and set output
-    println(musicXML)
     return 0
   }
 }
