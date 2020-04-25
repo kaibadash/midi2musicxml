@@ -28,7 +28,7 @@ class ParamsTest {
     val params = Params(command.split(" ").toTypedArray(), System.`in`)
     Assertions.assertFalse(params.showHelp)
     Assertions.assertFalse(params.silent)
-    Assertions.assertEquals(params.lyric!!.toString(), "")
+    Assertions.assertEquals(params.lyric.toString(), "")
     Assertions.assertEquals(params.lyricFile, "")
     Assertions.assertEquals(params.outputPath, command + ".musicxml")
   }
