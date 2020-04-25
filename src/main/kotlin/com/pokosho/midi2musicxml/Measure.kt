@@ -19,6 +19,9 @@ class Measure(val tickInMeasure: Int) {
   }
 
   companion object {
+    /**
+     * notesを小節に分割する
+     */
     fun splitMeasures(tickInMeasure: Int, notes: List<BaseNote>): List<Measure> {
       val measures = mutableListOf<Measure>()
       var measure = Measure(tickInMeasure)
