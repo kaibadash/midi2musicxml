@@ -1,10 +1,13 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
   kotlin("jvm") version "1.3.71"
+  id("java")
+  id("com.github.johnrengelman.shadow") version "5.2.0"
 }
 
-group = "com.pokosho"
+group = "com.pokosho.midi2musicxml"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
@@ -32,5 +35,21 @@ tasks.withType<KotlinCompile> {
   kotlinOptions {
     freeCompilerArgs = listOf("-Xjsr305=strict")
     jvmTarget = "1.8"
+  }
+}
+
+tasks {
+  named<ShadowJar>("shadowJar") {
+    archiveBaseName.set("shadow")
+    mergeServiceFiles()
+    manifest {
+      attributes(mapOf("Main-Class" to "com.github.csolem.gradle.shadow.kotlin.example.App"))
+    }
+  }
+}
+
+tasks {
+  build {
+    dependsOn(shadowJar)
   }
 }
