@@ -34,3 +34,9 @@ out/
 # others
 output/*
 .DS_Store
+*.lab
+*.bap
+*.f0
+*.mgc
+*.wav
+src/test/resources/test*.musicxml

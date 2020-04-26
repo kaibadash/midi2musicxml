@@ -1,6 +1,7 @@
 package com.pokosho.midi2musicxml.cui
 
 import com.pokosho.midi2musicxml.MidiParser
+import com.pokosho.midi2musicxml.executor.NeutrinoExecutor
 
 /**
  * Command Line Interface.
@@ -8,7 +9,7 @@ import com.pokosho.midi2musicxml.MidiParser
  */
 class Cui(val args: Array<String>) {
   fun run(): Int {
-    var params: Params?
+    val params: Params?
     try {
       params = Params(args, System.`in`)
     } catch (e: IllegalArgumentException) {
@@ -31,9 +32,8 @@ class Cui(val args: Array<String>) {
 
     parser.generateXML(params.outputPath)
     println("Completed: ${params.outputPath}")
-    // TODO: call neutrino and set output
-    if (!params.callNeutrino) {
-      return 0
+    if (params.neutrinoDir.isNotBlank()) {
+      NeutrinoExecutor(params.neutrinoDir, params.outputPath).execute()
     }
     return 0
   }
