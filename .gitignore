@@ -40,3 +40,4 @@ output/*
 *.mgc
 *.wav
 src/test/resources/test*.musicxml
+sample/*.musicxml
