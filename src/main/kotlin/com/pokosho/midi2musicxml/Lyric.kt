@@ -27,7 +27,7 @@ class Lyric {
     this.lyric = toHiragaana(byteSource.asCharSource(Charsets.UTF_8).read())
   }
 
-  fun setLiric(lyric: String) {
+  fun setLyric(lyric: String) {
     this.lyric = toHiragaana(lyric)
   }
 
@@ -50,7 +50,11 @@ class Lyric {
         it.reading
       }
     }
-    return readings.joinToString("").kana2hiragana()
+    return removeUnpronounced(readings.joinToString("").kana2hiragana())
+  }
+
+  private fun removeUnpronounced(string: String): String {
+    return string.replace("[〜ーっッ]".toRegex(), "")
   }
 
   override fun toString(): String {
