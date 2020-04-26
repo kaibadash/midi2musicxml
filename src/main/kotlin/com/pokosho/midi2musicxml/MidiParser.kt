@@ -20,13 +20,13 @@ class MidiParser {
   var tempo = Tempo()
   var notes: List<BaseNote> = mutableListOf()
   var resolution: Int = 0
-  var lyric = ""
+  var lyric = listOf<PronouncedWord>()
   val warnings = mutableListOf<String>()
 
   fun parse(pathToMidi: String, lyric: String) {
     val sequence = MidiSystem.getSequence(File(pathToMidi))
     this.resolution = sequence.resolution
-    this.lyric = lyric
+    this.lyric = PronouncedWord.toPronouncedWords(lyric)
     val notes = arrayListOf<Note>()
     if (sequence.tracks.size > 2) {
       warnings.add("MIDI has some tracks(${sequence.tracks.size}). Midi2musicxml uses first track.")
@@ -50,7 +50,7 @@ class MidiParser {
       println("Channel: ${message.channel} ")
       // MIDIは音の終わりと始まりがイベントとして記録される
       if (message.command == NOTE_ON) {
-        val char = if (lyric.count() > notes.count()) lyric[notes.count()] else null
+        val char = if (this.lyric.count() > notes.count()) this.lyric[notes.count()] else PronouncedWord("")
         notes.add(Note(message, char, event.tick.toInt()))
         continue
       }
@@ -83,7 +83,7 @@ class MidiParser {
   }
 
   fun lyricCharCount(): Int {
-    return lyric.length
+    return lyric.filter { it.toString().isNotBlank() }.count()
   }
 
   @Suppress("UNCHECKED_CAST")
