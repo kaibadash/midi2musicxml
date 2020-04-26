@@ -43,11 +43,11 @@ class Lyric {
     val readings = tokens.map {
       if (arrayOf("*", "、", "。").contains(it.baseForm)) {
         if (regex.containsMatchIn(it.surface)) {
-          this.warnings.add("English words are contained. They are ignored.")
+          this.warnings.add("English or numbers words are contained. They are ignored.")
         }
         ""
       } else {
-        it.reading
+        it.pronunciation
       }
     }
     return removeUnpronounced(readings.joinToString("").kana2hiragana())
