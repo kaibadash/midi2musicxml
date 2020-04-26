@@ -28,7 +28,7 @@ class LyricTest {
   fun testWithKanji() {
     val lyric = Lyric()
     lyric.setLyric("魑魅魍魎")
-    Assertions.assertEquals("ちみもうりょう", lyric.toString())
+    Assertions.assertEquals("ちみもりょ", lyric.toString())
     Assertions.assertEquals(lyric.warnings().size, 0)
   }
 
@@ -36,7 +36,7 @@ class LyricTest {
   fun testWithSymbol() {
     val lyric = Lyric()
     lyric.setLyric("魑魅魍魎!?^^;")
-    Assertions.assertEquals("ちみもうりょう", lyric.toString())
+    Assertions.assertEquals("ちみもりょ", lyric.toString())
     Assertions.assertEquals(lyric.warnings().size, 0)
   }
 
@@ -44,7 +44,7 @@ class LyricTest {
   fun testWithEnglish() {
     val lyric = Lyric()
     lyric.setLyric("Helloどうも俺はここ")
-    Assertions.assertEquals("どうもおれはここ", lyric.toString())
+    Assertions.assertEquals("どもおれわここ", lyric.toString())
     Assertions.assertEquals(lyric.warnings().size, 1)
   }
 
@@ -52,7 +52,7 @@ class LyricTest {
   fun testWithMultiByteEnglish() {
     val lyric = Lyric()
     lyric.setLyric("ＨＥＬＬＯどうも俺はここ")
-    Assertions.assertEquals("どうもおれはここ", lyric.toString())
+    Assertions.assertEquals("どもおれわここ", lyric.toString())
     Assertions.assertEquals(lyric.warnings().size, 1)
   }
 
@@ -75,7 +75,7 @@ class LyricTest {
 刺し身
 鍋
 日本酒で流し込みたい""")
-    Assertions.assertEquals("ぎょうざしゃぶしゃぶやきにくびるでながしこみたいさしみなべにぽんしゅでながしこみたい", lyric.toString())
+    Assertions.assertEquals("ぎょざしゃぶしゃぶやきにくびるでながしこみたいさしみなべにぽんしゅでながしこみたい", lyric.toString())
     Assertions.assertEquals(lyric.warnings().size, 0)
   }
 
@@ -84,6 +84,14 @@ class LyricTest {
     val lyric = Lyric()
     lyric.setLyric("ヨーロッパ")
     Assertions.assertEquals("よろぱ", lyric.toString())
+    Assertions.assertEquals(lyric.warnings().size, 0)
+  }
+
+  @Test
+  fun testReplaceForPronunciation() {
+    val lyric = Lyric()
+    lyric.setLyric("私は鳥")
+    Assertions.assertEquals("わたしわとり", lyric.toString())
     Assertions.assertEquals(lyric.warnings().size, 0)
   }
 }
