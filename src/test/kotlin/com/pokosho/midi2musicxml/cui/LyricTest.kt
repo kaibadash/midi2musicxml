@@ -19,7 +19,7 @@ class LyricTest {
   @Test
   fun testWithHiragana() {
     val lyric = Lyric()
-    lyric.setLiric("うい")
+    lyric.setLyric("うい")
     Assertions.assertEquals("うい", lyric.toString())
     Assertions.assertEquals(lyric.warnings().size, 0)
   }
@@ -27,7 +27,7 @@ class LyricTest {
   @Test
   fun testWithKanji() {
     val lyric = Lyric()
-    lyric.setLiric("魑魅魍魎")
+    lyric.setLyric("魑魅魍魎")
     Assertions.assertEquals("ちみもうりょう", lyric.toString())
     Assertions.assertEquals(lyric.warnings().size, 0)
   }
@@ -35,7 +35,7 @@ class LyricTest {
   @Test
   fun testWithSymbol() {
     val lyric = Lyric()
-    lyric.setLiric("魑魅魍魎!?^^;")
+    lyric.setLyric("魑魅魍魎!?^^;")
     Assertions.assertEquals("ちみもうりょう", lyric.toString())
     Assertions.assertEquals(lyric.warnings().size, 0)
   }
@@ -43,7 +43,7 @@ class LyricTest {
   @Test
   fun testWithEnglish() {
     val lyric = Lyric()
-    lyric.setLiric("Helloどうも俺はここ")
+    lyric.setLyric("Helloどうも俺はここ")
     Assertions.assertEquals("どうもおれはここ", lyric.toString())
     Assertions.assertEquals(lyric.warnings().size, 1)
   }
@@ -51,7 +51,7 @@ class LyricTest {
   @Test
   fun testWithMultiByteEnglish() {
     val lyric = Lyric()
-    lyric.setLiric("ＨＥＬＬＯどうも俺はここ")
+    lyric.setLyric("ＨＥＬＬＯどうも俺はここ")
     Assertions.assertEquals("どうもおれはここ", lyric.toString())
     Assertions.assertEquals(lyric.warnings().size, 1)
   }
@@ -59,7 +59,7 @@ class LyricTest {
   @Test
   fun testWithPeriod() {
     val lyric = Lyric()
-    lyric.setLiric("寿司、酒。刺し身,肉.")
+    lyric.setLyric("寿司、酒。刺し身,肉.")
     Assertions.assertEquals("すしさけさしみにく", lyric.toString())
     Assertions.assertEquals(lyric.warnings().size, 0)
   }
@@ -67,7 +67,7 @@ class LyricTest {
   @Test
   fun testWithLF() {
     val lyric = Lyric()
-    lyric.setLiric("""
+    lyric.setLyric("""
 餃子
 しゃぶしゃぶ
 焼肉
@@ -75,7 +75,15 @@ class LyricTest {
 刺し身
 鍋
 日本酒で流し込みたい""")
-    Assertions.assertEquals("ぎょうざしゃぶしゃぶやきにくびーるでながしこみたいさしみなべにっぽんしゅでながしこみたい", lyric.toString())
+    Assertions.assertEquals("ぎょうざしゃぶしゃぶやきにくびるでながしこみたいさしみなべにぽんしゅでながしこみたい", lyric.toString())
+    Assertions.assertEquals(lyric.warnings().size, 0)
+  }
+
+  @Test
+  fun testUnpronouncedWord() {
+    val lyric = Lyric()
+    lyric.setLyric("ヨーロッパ")
+    Assertions.assertEquals("よろぱ", lyric.toString())
     Assertions.assertEquals(lyric.warnings().size, 0)
   }
 }

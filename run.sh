@@ -3,7 +3,7 @@
 # exmample: ./run.sh output/test.musicxml
 
 # Project settings
-NEUTRINO_DIR=/Applications/NEUTRINO
+NEUTRINO_DIR=/Applications/NEUTRINO/0.1
 BASENAME=test
 NumThreads=3
 
