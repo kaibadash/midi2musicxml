@@ -39,3 +39,4 @@ output/*
 *.f0
 *.mgc
 *.wav
+src/test/resources/test*.musicxml
