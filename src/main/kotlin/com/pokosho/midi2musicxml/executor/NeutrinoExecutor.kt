@@ -30,9 +30,9 @@ class NeutrinoExecutor(val dirNuetrino: String, val pathToMusicXML: String,
       "-n", thread, "-t"
     )
     builder.directory(File(dirNuetrino))
-    process.waitFor()
     println(builder.command().joinToString(" "))
     process = builder.start()
+    process.waitFor()
 
     val output = "${target}.wav"
     builder = ProcessBuilder("${dirNuetrino}/bin/WORLD",

@@ -19,7 +19,7 @@ class LyricTest {
   @Test
   fun testWithHiragana() {
     val lyric = Lyric()
-    lyric.lyric = "うい"
+    lyric.setLiric("うい")
     Assertions.assertEquals("うい", lyric.toString())
     Assertions.assertEquals(lyric.warnings().size, 0)
   }
@@ -27,7 +27,7 @@ class LyricTest {
   @Test
   fun testWithKanji() {
     val lyric = Lyric()
-    lyric.lyric = "魑魅魍魎"
+    lyric.setLiric("魑魅魍魎")
     Assertions.assertEquals("ちみもうりょう", lyric.toString())
     Assertions.assertEquals(lyric.warnings().size, 0)
   }
@@ -35,7 +35,7 @@ class LyricTest {
   @Test
   fun testWithSymbol() {
     val lyric = Lyric()
-    lyric.lyric = "魑魅魍魎!?^^;"
+    lyric.setLiric("魑魅魍魎!?^^;")
     Assertions.assertEquals("ちみもうりょう", lyric.toString())
     Assertions.assertEquals(lyric.warnings().size, 0)
   }
@@ -43,7 +43,7 @@ class LyricTest {
   @Test
   fun testWithEnglish() {
     val lyric = Lyric()
-    lyric.lyric = "Helloどうも俺はここ"
+    lyric.setLiric("Helloどうも俺はここ")
     Assertions.assertEquals("どうもおれはここ", lyric.toString())
     Assertions.assertEquals(lyric.warnings().size, 1)
   }
@@ -51,7 +51,7 @@ class LyricTest {
   @Test
   fun testWithMultiByteEnglish() {
     val lyric = Lyric()
-    lyric.lyric = "ＨＥＬＬＯどうも俺はここ"
+    lyric.setLiric("ＨＥＬＬＯどうも俺はここ")
     Assertions.assertEquals("どうもおれはここ", lyric.toString())
     Assertions.assertEquals(lyric.warnings().size, 1)
   }
@@ -59,8 +59,23 @@ class LyricTest {
   @Test
   fun testWithPeriod() {
     val lyric = Lyric()
-    lyric.lyric = "寿司、酒。刺し身,肉."
+    lyric.setLiric("寿司、酒。刺し身,肉.")
     Assertions.assertEquals("すしさけさしみにく", lyric.toString())
+    Assertions.assertEquals(lyric.warnings().size, 0)
+  }
+
+  @Test
+  fun testWithLF() {
+    val lyric = Lyric()
+    lyric.setLiric("""
+餃子
+しゃぶしゃぶ
+焼肉
+ビールで流し込みたい
+刺し身
+鍋
+日本酒で流し込みたい""")
+    Assertions.assertEquals("ぎょうざしゃぶしゃぶやきにくびーるでながしこみたいさしみなべにっぽんしゅでながしこみたい", lyric.toString())
     Assertions.assertEquals(lyric.warnings().size, 0)
   }
 }
