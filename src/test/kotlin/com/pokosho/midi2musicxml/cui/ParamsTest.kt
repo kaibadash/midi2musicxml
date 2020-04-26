@@ -30,7 +30,7 @@ class ParamsTest {
     Assertions.assertFalse(params.silent)
     Assertions.assertEquals(params.lyric.toString(), "")
     Assertions.assertEquals(params.lyricFile, "")
-    Assertions.assertEquals(params.outputPath, command + ".musicxml")
+    Assertions.assertEquals(params.outputPath, "src/test/resources/test_short.musicxml")
   }
 
   @Test

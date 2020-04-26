@@ -9,12 +9,12 @@ import java.io.InputStream
 
 class Lyric {
   private val warnings: MutableSet<String> = mutableSetOf()
-  internal var lyric = ""
+  private var lyric: String = ""
 
   constructor()
 
   constructor(pathToFile: String) {
-    lyric = Files.readLines(File(pathToFile), Charsets.UTF_8).joinToString("")
+    this.lyric = toHiragaana(Files.readLines(File(pathToFile), Charsets.UTF_8).joinToString(""))
   }
 
   constructor(stdin: InputStream) {
@@ -24,40 +24,36 @@ class Lyric {
         return stdin
       }
     }
-    lyric = byteSource.asCharSource(Charsets.UTF_8).read()
+    this.lyric = toHiragaana(byteSource.asCharSource(Charsets.UTF_8).read())
   }
 
-  fun setLyric(lyric: String) {
-    this.lyric = lyric
+  fun setLiric(lyric: String) {
+    this.lyric = toHiragaana(lyric)
   }
 
   fun warnings(): Array<String> {
     return warnings.toTypedArray()
   }
 
-  private fun toHiragana(): Lyric {
+  private fun toHiragaana(string: String): String {
     val tokenizer = Tokenizer.Builder().build()
-    val tokens = tokenizer.tokenize(lyric)
+    val tokens = tokenizer.tokenize(string.trim())
     val regex = Regex("[0-9０-９a-zA-Zａ-ｚＡ-Ｚ]")
-    this.lyric = tokens.map {
+
+    val readings = tokens.map {
       if (arrayOf("*", "、", "。").contains(it.baseForm)) {
         if (regex.containsMatchIn(it.surface)) {
           this.warnings.add("English words are contained. They are ignored.")
         }
         ""
       } else {
-        it.reading.kana2hiragana()
+        it.reading
       }
-    }.joinToString("")
-    return this
-  }
-
-  private fun trim(): Lyric {
-    this.lyric = lyric.trim()
-    return this
+    }
+    return readings.joinToString("").kana2hiragana()
   }
 
   override fun toString(): String {
-    return trim().toHiragana().lyric
+    return lyric
   }
 }
