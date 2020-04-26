@@ -6,7 +6,7 @@ import java.io.InputStream
 
 class Params(args: Array<String>, inputStream: InputStream) {
   var showHelp = false
-  var callNeutrino = false
+  var neutrinoDir = ""
   var silent = false
   var lyricFile: String = ""
   var midiFile: String = ""
@@ -24,8 +24,8 @@ OPTIONS
   Specify a input file of lyrics. STDIN is read if the file is not specified. 
 -o output-file-xml
   Specify a path to the output xml file. By default, the output is [path to mid].musicxml.
--n
-  Call NEUTRINO. You must set NEUTRINO_HOME environment.
+-n path-to-neutrino-directory
+   Call NEUTRINO if it is specified.
 -s
   Ignore warnings.
 --help
@@ -53,9 +53,10 @@ OPTIONS
       if (lyricFile.isNotBlank() && !File(lyricFile).exists()) {
         throw IllegalArgumentException("A text file $lyricFile is not found.")
       }
-      this.callNeutrino = args.filter { it == "-n" }.isNotEmpty()
+      this.neutrinoDir = getOptionValue(args, "-n")
       this.silent = args.filter { it == "-s" }.isNotEmpty()
-      this.outputPath = getOptionValue(args, "-o", midiFile + ".musicxml")
+      val midi = File(midiFile)
+      this.outputPath = getOptionValue(args, "-o", "${midi.parent}/${midi.name.split(".").first()}.musicxml")
       if (!outputPath.endsWith(".musicxml")) {
         throw IllegalArgumentException("An output file $outputPath doesn't end with .musicxml")
       }

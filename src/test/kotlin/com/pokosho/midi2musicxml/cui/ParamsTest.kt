@@ -42,9 +42,10 @@ class ParamsTest {
 
   @Test
   fun testWithCallNeutrino() {
-    val command = "$midi -n"
+    val dir = "src/test/resources/NEUTRINO"
+    val command = "$midi -n $dir"
     val params = Params(command.split(" ").toTypedArray(), System.`in`)
-    Assertions.assertTrue(params.callNeutrino)
+    Assertions.assertEquals(dir, params.neutrinoDir)
   }
 
   @Test

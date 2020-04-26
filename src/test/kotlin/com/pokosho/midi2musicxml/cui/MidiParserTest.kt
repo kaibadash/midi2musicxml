@@ -3,7 +3,6 @@ package com.pokosho.midi2musicxml.cui
 import com.pokosho.midi2musicxml.MidiParser
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 
 class MidiParserTest {
   private fun getParser(midi: String, lyric: String): MidiParser {
@@ -53,7 +52,6 @@ class MidiParserTest {
     Assertions.assertEquals(1, parser.warnings.size)
     Assertions.assertTrue(parser.warnings.first().contains("track"))
   }
-
 
 
 //  MIDI has multi tracks

@@ -10,6 +10,7 @@ class MidiParser {
   val META_TEMPO = 0x51
   val NOTE_ON = 0x90
   val NOTE_OFF = 0x80
+
   // FIXME: 1小節内の4分音符の数。可変に対応する。
   val QUOTES_IN_MEASURE = 4
   val TOO_LOW_OCTAVE = 2
