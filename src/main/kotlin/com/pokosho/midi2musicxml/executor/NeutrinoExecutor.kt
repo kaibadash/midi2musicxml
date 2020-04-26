@@ -3,13 +3,10 @@ package com.pokosho.midi2musicxml.executor
 import java.io.File
 
 class NeutrinoExecutor(val dirNuetrino: String, val pathToMusicXML: String,
-                       val singer: Singer = Singer.Kiritan) {
-  val Model = "KIRITAN"
-  val PitchShift = "1.0"
-  val FormantShift = "1.0"
-
+                       val singer: Singer = Singer.Kiritan,
+                       val pitchShift: Double = 1.0, val formantShift: Double = 1.0) {
   /**
-   * NOTE: 今後NEUTRINO
+   * NOTE: 今後NEUTRINOのインタフェースがどうなるかわからないためベタ書き
    */
   fun execute() {
     val target = baseFileName(pathToMusicXML)
@@ -39,7 +36,7 @@ class NeutrinoExecutor(val dirNuetrino: String, val pathToMusicXML: String,
 
     val output = "${target}.wav"
     builder = ProcessBuilder("${dirNuetrino}/bin/WORLD",
-      f0, mgc, bap, "-f", PitchShift, "-m", FormantShift,
+      f0, mgc, bap, "-f", pitchShift.toString(), "-m", formantShift.toString(),
       "-o", output, "-n", thread, "-t"
     )
     builder.directory(File(dirNuetrino))
