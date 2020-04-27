@@ -3,6 +3,7 @@ package com.pokosho.midi2musicxml
 import com.atilika.kuromoji.ipadic.Tokenizer
 import com.google.common.io.ByteSource
 import com.google.common.io.Files
+import com.pokosho.midi2musicxml.extension.kana2hiragana
 import java.io.File
 import java.io.IOException
 import java.io.InputStream
