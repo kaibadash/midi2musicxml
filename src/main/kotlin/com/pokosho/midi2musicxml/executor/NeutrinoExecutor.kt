@@ -54,12 +54,4 @@ class NeutrinoExecutor(val dirNuetrino: String, val pathToMusicXML: String,
     val file = File(path)
     return "${file.absolutePath.split("/").dropLast(1).joinToString("/").replace("./", "")}/${file.name.split(".").dropLast(1).joinToString("")}"
   }
-
-  private fun pipe(inputStream: InputStream, pipeOut: PipedWriter) {
-    val writer = PrintWriter(pipeOut)
-    while (inputStream.available() > 0) {
-      writer.print(inputStream.read())
-      writer.flush()
-    }
-  }
 }
