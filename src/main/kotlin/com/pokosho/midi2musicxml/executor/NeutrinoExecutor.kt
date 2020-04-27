@@ -1,6 +1,7 @@
 package com.pokosho.midi2musicxml.executor
 
-import java.io.File
+import java.io.*
+
 
 class NeutrinoExecutor(val dirNuetrino: String, val pathToMusicXML: String,
                        val singer: Singer = Singer.Kiritan,
@@ -10,12 +11,14 @@ class NeutrinoExecutor(val dirNuetrino: String, val pathToMusicXML: String,
    */
   fun execute() {
     val target = baseFileName(pathToMusicXML)
+
     val labelFull = "${target}-full.lab"
     val labelMono = "${target}-mono.lab"
     var builder = ProcessBuilder("${dirNuetrino}/bin/musicXMLtoLabel",
       "${target}.musicxml", labelFull, labelMono)
     val thread = Runtime.getRuntime().availableProcessors().toString()
     builder.directory(File(dirNuetrino))
+    builder.inheritIO()
     println(builder.command().joinToString(" "))
     var process = builder.start()
     process.waitFor()
@@ -30,6 +33,7 @@ class NeutrinoExecutor(val dirNuetrino: String, val pathToMusicXML: String,
       "-n", thread, "-t"
     )
     builder.directory(File(dirNuetrino))
+    builder.inheritIO()
     println(builder.command().joinToString(" "))
     process = builder.start()
     process.waitFor()
@@ -40,6 +44,7 @@ class NeutrinoExecutor(val dirNuetrino: String, val pathToMusicXML: String,
       "-o", output, "-n", thread, "-t"
     )
     builder.directory(File(dirNuetrino))
+    builder.inheritIO()
     println(builder.command().joinToString(" "))
     process = builder.start()
     process.waitFor()
@@ -48,5 +53,13 @@ class NeutrinoExecutor(val dirNuetrino: String, val pathToMusicXML: String,
   private fun baseFileName(path: String): String {
     val file = File(path)
     return "${file.absolutePath.split("/").dropLast(1).joinToString("/").replace("./", "")}/${file.name.split(".").dropLast(1).joinToString("")}"
+  }
+
+  private fun pipe(inputStream: InputStream, pipeOut: PipedWriter) {
+    val writer = PrintWriter(pipeOut)
+    while (inputStream.available() > 0) {
+      writer.print(inputStream.read())
+      writer.flush()
+    }
   }
 }
