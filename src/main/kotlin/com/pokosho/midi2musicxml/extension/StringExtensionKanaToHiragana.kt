@@ -1,4 +1,4 @@
-package com.pokosho.midi2musicxml
+package com.pokosho.midi2musicxml.extension
 
 fun String.kana2hiragana(): String {
   val sb = StringBuilder()
