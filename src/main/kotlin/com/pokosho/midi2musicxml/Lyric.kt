@@ -15,7 +15,7 @@ class Lyric {
   constructor()
 
   constructor(pathToFile: String) {
-    this.lyric = toHiragaana(Files.readLines(File(pathToFile), Charsets.UTF_8).joinToString(""))
+    this.lyric = toHiragana(Files.readLines(File(pathToFile), Charsets.UTF_8).joinToString(""))
   }
 
   constructor(stdin: InputStream) {
@@ -25,18 +25,18 @@ class Lyric {
         return stdin
       }
     }
-    this.lyric = toHiragaana(byteSource.asCharSource(Charsets.UTF_8).read())
+    this.lyric = toHiragana(byteSource.asCharSource(Charsets.UTF_8).read())
   }
 
   fun setLyric(lyric: String) {
-    this.lyric = toHiragaana(lyric)
+    this.lyric = toHiragana(lyric)
   }
 
   fun warnings(): Array<String> {
     return warnings.toTypedArray()
   }
 
-  private fun toHiragaana(string: String): String {
+  private fun toHiragana(string: String): String {
     val tokenizer = Tokenizer.Builder().build()
     val tokens = tokenizer.tokenize(string.trim())
     val regex = Regex("[0-9０-９a-zA-Zａ-ｚＡ-Ｚ]")
