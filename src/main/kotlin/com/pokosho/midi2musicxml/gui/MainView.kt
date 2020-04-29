@@ -2,6 +2,7 @@ package com.pokosho.midi2musicxml.gui
 
 import com.google.common.io.Files
 import com.pokosho.midi2musicxml.MidiParser
+import com.pokosho.midi2musicxml.executor.NeutrinoExecutor
 import javafx.scene.control.Button
 import javafx.scene.control.TextArea
 import javafx.scene.control.TextField
@@ -59,6 +60,13 @@ class MainView : View("Midi2MusicXML") {
         }
         preview()
       }
+
+      buttonGenerate.action {
+        if (!validate()) {
+          return@action
+        }
+        execute()
+      }
     }
   }
 
@@ -108,6 +116,19 @@ class MainView : View("Midi2MusicXML") {
       Files.readLines(File(textPathToLyric.text), Charsets.UTF_8).joinToString("\n"))
     textMessage.text = parser.warnings.joinToString("\n")
     textPreview.text = parser.lyricForPreview()
+  }
+
+  private fun execute() {
+    val parser = MidiParser()
+    var lyric = textPreview.text
+    if (lyric.isBlank()) {
+      lyric = Files.readLines(File(textPathToLyric.text), Charsets.UTF_8).joinToString("\n")
+    }
+    lyric = lyric.replace("\r", "").split("\n").joinToString("")
+    parser.parse(textPathToInputMid.text, lyric)
+    val pathToMusicXML = textPathToInputMid.text.split(".").dropLast(1).joinToString(".") + ".musicxml"
+    parser.generateXML(pathToMusicXML)
+    NeutrinoExecutor(textPathToNeutrino.text, pathToMusicXML).execute()
   }
 }
 

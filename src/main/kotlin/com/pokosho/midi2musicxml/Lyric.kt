@@ -49,9 +49,13 @@ class Lyric {
     val tokenizer = Tokenizer.Builder().build()
     val tokens = tokenizer.tokenize(string.trim())
     val regex = Regex("[0-9０-９a-zA-Zａ-ｚＡ-Ｚ]")
+    val regexReadable = Regex("^[あ-んア-ン]+$")
 
     val readings = tokens.map {
       if (it.surface == "\n") {
+        return@map it.surface
+      }
+      if (regexReadable.matches(it.surface)) {
         return@map it.surface
       }
       if (arrayOf("*", "、", "。").contains(it.baseForm)) {
