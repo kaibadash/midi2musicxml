@@ -5,6 +5,7 @@ plugins {
   kotlin("jvm") version "1.3.71"
   id("java")
   id("com.github.johnrengelman.shadow") version "5.2.0"
+  id("application")
   id("org.openjfx.javafxplugin") version "0.0.8"
 }
 
@@ -40,7 +41,7 @@ tasks.withType<KotlinCompile> {
       "-Xjsr305=strict",
       "-Xopt-in=kotlin.ExperimentalUnsignedTypes"
     )
-    jvmTarget = "1.8"
+    jvmTarget = "11"
   }
 }
 
@@ -58,4 +59,9 @@ tasks {
   build {
     dependsOn(shadowJar)
   }
+}
+
+javafx {
+  version = "11.0.2"
+  modules = listOf("javafx.controls", "javafx.graphics")
 }
