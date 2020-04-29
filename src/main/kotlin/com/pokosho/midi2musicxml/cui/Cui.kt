@@ -2,12 +2,8 @@ package com.pokosho.midi2musicxml.cui
 
 import com.pokosho.midi2musicxml.MidiParser
 import com.pokosho.midi2musicxml.executor.NeutrinoExecutor
-import com.pokosho.midi2musicxml.gui.MainView
 import com.pokosho.midi2musicxml.gui.Midi2MusicXMLGUI
-import javafx.application.Application
 import javafx.application.Application.launch
-import javafx.stage.Stage
-import java.lang.Thread.sleep
 
 /**
  * Command Line Interface.

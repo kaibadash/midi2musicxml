@@ -23,7 +23,7 @@ dependencies {
   implementation("com.google.guava:guava:29.0-jre")
   implementation("com.atilika.kuromoji:kuromoji-ipadic:0.9.0")
   implementation("org.openjfx:javafx-controls:14")
-  compile("no.tornado:tornadofx:1.7.17")
+  implementation("no.tornado:tornadofx:1.7.17")
 
   testImplementation("org.mockito:mockito-junit-jupiter:3.3.3")
   testImplementation("org.junit.jupiter:junit-jupiter-engine:5.6.2")
