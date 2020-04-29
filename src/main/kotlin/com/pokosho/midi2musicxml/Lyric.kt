@@ -55,10 +55,10 @@ class Lyric {
       if (it.surface == "\n") {
         return@map it.surface
       }
-      if (regexReadable.matches(it.surface)) {
-        return@map it.surface
-      }
       if (arrayOf("*", "、", "。").contains(it.baseForm)) {
+        if (regexReadable.matches(it.surface)) {
+          return@map it.surface
+        }
         if (regex.containsMatchIn(it.surface)) {
           this.warnings.add("English or numbers words are contained. They are ignored.")
         }
