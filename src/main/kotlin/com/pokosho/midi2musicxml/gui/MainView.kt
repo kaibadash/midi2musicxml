@@ -27,14 +27,8 @@ class MainView : View("Midi2MusicXML") {
   init {
     run {
       this.currentStage?.isResizable = false
-      buttonLazySearch.action {
-        val dir = lazySearchNeutrino()
-        if (dir == null) {
-          textMessage.text = "NEUTRINOが見つかりませんでした"
-          return@action
-        }
-        textPathToNeutrino.text = dir?.absolutePath
-      }
+      lazySearchNeutrino()
+      buttonLazySearch.action { lazySearchNeutrino() }
 
       buttonSelectNeutrino.action {
         val directoryChooser = DirectoryChooser()
@@ -45,7 +39,7 @@ class MainView : View("Midi2MusicXML") {
 
       buttonSelectMidi.action {
         val chooser = FileChooser()
-        chooser.title = "midiを選択"
+        chooser.title = "MIDIを選択"
         chooser.extensionFilters.add(FileChooser.ExtensionFilter("MIDI", "*.mid", "*.midi", "*.MID", "*.MIDI"))
         val path = chooser.showOpenDialog(this.currentWindow) ?: return@action
         textPathToInputMid.text = path.absolutePath
@@ -70,22 +64,28 @@ class MainView : View("Midi2MusicXML") {
     }
   }
 
-  private fun lazySearchNeutrino(): File? {
+  private fun lazySearchNeutrino() {
     val env = System.getenv()
     var targets = listOf("/Applications", "~/Desktop", "~/Documents", "~/")
     if (System.getProperty("os.name").toLowerCase().startsWith("windows")) {
       targets = listOf(env["HOMEPATH"] ?: "" , env["ProgramFiles(x86)"] ?: "", env["ProgramFiles"] ?: "").filter { it.isNotBlank() }
     }
+    var path = ""
     targets.forEach {
       val dir = File(it)
       val founds = dir.listFiles().filter { it.name == "NEUTRINO" }
       if (founds.size > 0 && founds.first().isDirectory) {
         if (File(founds.first().absolutePath + "/bin/NEUTRINO").exists()) {
-          return founds.first()
+          path = founds.first().absolutePath
+          return@forEach
         }
       }
     }
-    return null
+
+    if (path.isBlank()) {
+      return
+    }
+    textPathToNeutrino.text = path
   }
 }
 
