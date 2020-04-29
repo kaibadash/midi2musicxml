@@ -22,6 +22,7 @@ dependencies {
   implementation("org.slf4j:slf4j-log4j12:1.7.30")
   implementation("com.google.guava:guava:29.0-jre")
   implementation("com.atilika.kuromoji:kuromoji-ipadic:0.9.0")
+  implementation("org.openjfx:javafx-controls:14")
   compile("no.tornado:tornadofx:1.7.17")
 
   testImplementation("org.mockito:mockito-junit-jupiter:3.3.3")
