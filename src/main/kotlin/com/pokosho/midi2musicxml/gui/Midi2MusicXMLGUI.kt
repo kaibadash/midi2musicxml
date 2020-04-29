@@ -1,5 +1,5 @@
 package com.pokosho.midi2musicxml.gui
 
-import tornadofx.App
+import tornadofx.*
 
-class Midi2MusicXMLGUI: App(MainView::class, Styles::class)
+class Midi2MusicXMLGUI : App(MainView::class, Styles::class)

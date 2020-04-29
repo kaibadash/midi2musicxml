@@ -20,13 +20,13 @@ class MidiParser {
   var tempo = Tempo()
   var notes: List<BaseNote> = mutableListOf()
   var resolution: Int = 0
-  var lyric = listOf<PronouncedWord>()
+  var lyric: Lyric = Lyric()
   val warnings = mutableListOf<String>()
 
-  fun parse(pathToMidi: String, lyric: String) {
+  fun parse(pathToMidi: String, lyricString: String) {
     val sequence = MidiSystem.getSequence(File(pathToMidi))
     this.resolution = sequence.resolution
-    this.lyric = PronouncedWord.toPronouncedWords(lyric)
+    this.lyric = Lyric.fromString(lyricString)
     val notes = arrayListOf<Note>()
     if (sequence.tracks.size > 2) {
       warnings.add("MIDI has some tracks(${sequence.tracks.size}). Midi2musicxml uses first track.")
@@ -50,8 +50,7 @@ class MidiParser {
       println("Channel: ${message.channel} ")
       // MIDIは音の終わりと始まりがイベントとして記録される
       if (message.command == NOTE_ON) {
-        val char = if (this.lyric.count() > notes.count()) this.lyric[notes.count()] else PronouncedWord("")
-        notes.add(Note(message, char, event.tick.toInt()))
+        notes.add(Note(message, this.lyric.charAt(notes.count()), event.tick.toInt()))
         continue
       }
       if (message.command == NOTE_OFF) {
@@ -82,8 +81,12 @@ class MidiParser {
     return notes.filter { it is Note }.count()
   }
 
-  fun lyricCharCount(): Int {
-    return lyric.filter { it.toString().isNotBlank() }.count()
+  fun lyricWordCount(): Int {
+    return this.lyric.count()
+  }
+
+  fun lyricForPreview(): String {
+    return lyric.stringForPreview()
   }
 
   @Suppress("UNCHECKED_CAST")
@@ -101,8 +104,8 @@ class MidiParser {
   }
 
   private fun validate(): List<String> {
-    if (notesCount() != lyricCharCount()) {
-      warnings.add("Number of notes(${notesCount()}) is not much number of lyric characters (${lyricCharCount()}).")
+    if (notesCount() != lyric.count()) {
+      warnings.add("Number of notes(${notesCount()}) is not much number of lyric characters (${lyric.count()}).")
     }
     if (percentageOfTooHigh() > WARN_PARCENTAGE) {
       warnings.add("Many notes(${notesCount()}%) are too high. Valid octave?")

@@ -1,6 +1,6 @@
 package com.pokosho.midi2musicxml.executor
 
-import java.io.*
+import java.io.File
 
 
 class NeutrinoExecutor(val dirNuetrino: String, val pathToMusicXML: String,

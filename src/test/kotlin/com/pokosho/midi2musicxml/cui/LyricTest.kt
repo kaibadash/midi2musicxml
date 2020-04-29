@@ -18,56 +18,49 @@ class LyricTest {
 
   @Test
   fun testWithHiragana() {
-    val lyric = Lyric()
-    lyric.setLyric("うい")
+    val lyric = Lyric.fromString("うい")
     Assertions.assertEquals("うい", lyric.toString())
     Assertions.assertEquals(lyric.warnings().size, 0)
   }
 
   @Test
   fun testWithKanji() {
-    val lyric = Lyric()
-    lyric.setLyric("魑魅魍魎")
+    val lyric = Lyric.fromString("魑魅魍魎")
     Assertions.assertEquals("ちみもりょ", lyric.toString())
     Assertions.assertEquals(lyric.warnings().size, 0)
   }
 
   @Test
   fun testWithSymbol() {
-    val lyric = Lyric()
-    lyric.setLyric("魑魅魍魎!?^^;")
+    val lyric = Lyric.fromString("魑魅魍魎!?^^;")
     Assertions.assertEquals("ちみもりょ", lyric.toString())
     Assertions.assertEquals(lyric.warnings().size, 0)
   }
 
   @Test
   fun testWithEnglish() {
-    val lyric = Lyric()
-    lyric.setLyric("Helloどうも俺はここ")
+    val lyric = Lyric.fromString("Helloどうも俺はここ")
     Assertions.assertEquals("どもおれわここ", lyric.toString())
     Assertions.assertEquals(lyric.warnings().size, 1)
   }
 
   @Test
   fun testWithMultiByteEnglish() {
-    val lyric = Lyric()
-    lyric.setLyric("ＨＥＬＬＯどうも俺はここ")
+    val lyric = Lyric.fromString("ＨＥＬＬＯどうも俺はここ")
     Assertions.assertEquals("どもおれわここ", lyric.toString())
     Assertions.assertEquals(lyric.warnings().size, 1)
   }
 
   @Test
   fun testWithPeriod() {
-    val lyric = Lyric()
-    lyric.setLyric("寿司、酒。刺し身,肉.")
+    val lyric = Lyric.fromString("寿司、酒。刺し身,肉.")
     Assertions.assertEquals("すしさけさしみにく", lyric.toString())
     Assertions.assertEquals(lyric.warnings().size, 0)
   }
 
   @Test
   fun testWithLF() {
-    val lyric = Lyric()
-    lyric.setLyric("""
+    val lyric = Lyric.fromString("""
 餃子
 しゃぶしゃぶ
 焼肉
@@ -81,16 +74,14 @@ class LyricTest {
 
   @Test
   fun testUnpronouncedWord() {
-    val lyric = Lyric()
-    lyric.setLyric("ヨーロッパ")
+    val lyric = Lyric.fromString("ヨーロッパ")
     Assertions.assertEquals("よろぱ", lyric.toString())
     Assertions.assertEquals(lyric.warnings().size, 0)
   }
 
   @Test
   fun testReplaceForPronunciation() {
-    val lyric = Lyric()
-    lyric.setLyric("私は鳥")
+    val lyric = Lyric.fromString("私は鳥")
     Assertions.assertEquals("わたしわとり", lyric.toString())
     Assertions.assertEquals(lyric.warnings().size, 0)
   }
