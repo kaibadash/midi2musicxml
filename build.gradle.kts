@@ -5,6 +5,7 @@ plugins {
   kotlin("jvm") version "1.3.71"
   id("java")
   id("com.github.johnrengelman.shadow") version "5.2.0"
+  id("org.openjfx.javafxplugin") version "0.0.8"
 }
 
 group = "com.pokosho.midi2musicxml"
