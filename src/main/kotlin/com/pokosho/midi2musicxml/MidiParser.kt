@@ -66,10 +66,6 @@ class MidiParser {
     validate()
   }
 
-  fun generateXML() {
-    this.generateXML()
-  }
-
   fun generateXML(outputPath: String) {
     Render().renderTemplate(
       "template.musicxml",

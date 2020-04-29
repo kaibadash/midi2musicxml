@@ -2,6 +2,12 @@ package com.pokosho.midi2musicxml.cui
 
 import com.pokosho.midi2musicxml.MidiParser
 import com.pokosho.midi2musicxml.executor.NeutrinoExecutor
+import com.pokosho.midi2musicxml.gui.MainView
+import com.pokosho.midi2musicxml.gui.Midi2MusicXMLGUI
+import javafx.application.Application
+import javafx.application.Application.launch
+import javafx.stage.Stage
+import java.lang.Thread.sleep
 
 /**
  * Command Line Interface.
@@ -9,6 +15,10 @@ import com.pokosho.midi2musicxml.executor.NeutrinoExecutor
  */
 class Cui(val args: Array<String>) {
   fun run(): Int {
+    if (args.count() == 0) {
+      launch(Midi2MusicXMLGUI::class.java, *args)
+      return 0
+    }
     val params: Params?
     try {
       params = Params(args, System.`in`)
