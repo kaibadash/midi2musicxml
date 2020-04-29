@@ -105,7 +105,7 @@ class MidiParser {
 
   private fun validate(): List<String> {
     if (notesCount() != lyric.count()) {
-      warnings.add("Number of notes(${notesCount()}) is not much number of lyric characters (${lyric.count()}).")
+      warnings.add("Number of notes(${notesCount()}) doesn't match number of lyric characters (${lyric.count()}).")
     }
     if (percentageOfTooHigh() > WARN_PARCENTAGE) {
       warnings.add("Many notes(${notesCount()}%) are too high. Valid octave?")
