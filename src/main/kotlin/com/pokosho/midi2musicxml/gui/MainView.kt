@@ -12,7 +12,6 @@ import java.io.File
 
 class MainView : View("Midi2MusicXML") {
   override val root: AnchorPane by fxml("/fxml/main_view.fxml")
-  private val buttonLazySearch: Button by fxid("buttonLazySearch")
   private val buttonSelectNeutrino: Button by fxid("buttonSelectNeutrino")
   private val buttonSelectMidi: Button by fxid("buttonSelectMidi")
   private val buttonSelectLyric: Button by fxid("buttonSelectLyric")
@@ -28,7 +27,6 @@ class MainView : View("Midi2MusicXML") {
     run {
       this.currentStage?.isResizable = false
       lazySearchNeutrino()
-      buttonLazySearch.action { lazySearchNeutrino() }
 
       buttonSelectNeutrino.action {
         val directoryChooser = DirectoryChooser()
@@ -71,13 +69,16 @@ class MainView : View("Midi2MusicXML") {
       targets = listOf(env["HOMEPATH"] ?: "" , env["ProgramFiles(x86)"] ?: "", env["ProgramFiles"] ?: "").filter { it.isNotBlank() }
     }
     var path = ""
-    targets.forEach {
-      val dir = File(it)
-      val founds = dir.listFiles().filter { it.name == "NEUTRINO" }
-      if (founds.size > 0 && founds.first().isDirectory) {
-        if (File(founds.first().absolutePath + "/bin/NEUTRINO").exists()) {
-          path = founds.first().absolutePath
-          return@forEach
+    run {
+      targets.forEach {
+        val dir = File(it)
+        val files = dir.listFiles()
+        val founds = files?.filter { it.name == "NEUTRINO" } ?: return@forEach
+        if (founds.isNotEmpty() && founds.first().isDirectory) {
+          if (File(founds.first().absolutePath + "/bin/NEUTRINO").exists()) {
+            path = founds.first().absolutePath
+            return@run
+          }
         }
       }
     }
