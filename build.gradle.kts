@@ -65,3 +65,7 @@ javafx {
   version = "11.0.2"
   modules = listOf("javafx.controls", "javafx.graphics", "javafx.fxml")
 }
+
+application {
+  mainClassName = "com.pokosho.midi2musicxml.MainKt"
+}

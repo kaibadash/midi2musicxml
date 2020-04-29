@@ -11,10 +11,6 @@ import javafx.application.Application.launch
  */
 class Cui(val args: Array<String>) {
   fun run(): Int {
-    if (args.count() == 0) {
-      launch(Midi2MusicXMLGUI::class.java, *args)
-      return 0
-    }
     val params: Params?
     try {
       params = Params(args, System.`in`)
@@ -43,8 +39,4 @@ class Cui(val args: Array<String>) {
     }
     return 0
   }
-}
-
-fun main(args: Array<String>) {
-  Cui(args).run()
 }
