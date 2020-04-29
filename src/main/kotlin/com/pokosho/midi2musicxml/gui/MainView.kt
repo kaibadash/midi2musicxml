@@ -25,27 +25,37 @@ class MainView : View("Midi2MusicXML") {
   private val textMessage: TextArea by fxid("textMessage")
 
   init {
-    buttonLazySearch.action {
-      val dir = lazySearchNeutrino()
-      if (dir == null) {
-        textMessage.text = "NEUTRINOが見つかりませんでした"
+    run {
+      this.currentStage?.isResizable = false
+      buttonLazySearch.action {
+        val dir = lazySearchNeutrino()
+        if (dir == null) {
+          textMessage.text = "NEUTRINOが見つかりませんでした"
+          return@action
+        }
+        textPathToNeutrino.text = dir?.absolutePath
       }
-      textPathToNeutrino.text = dir?.absolutePath
-    }
 
-    buttonSelectMidi.action {
-      val chooser = FileChooser()
-      chooser.title = "midiを選択"
-      chooser.extensionFilters.add(FileChooser.ExtensionFilter("MIDI", "*.mid", "*.midi", "*.MID", "*.MIDI"))
-      val path = chooser.showOpenDialog(this.currentWindow)
-      textPathToNeutrino.text = path.absolutePath
-    }
+      buttonSelectNeutrino.action {
+        val directoryChooser = DirectoryChooser()
+        directoryChooser.title = "ディレクトリを選択"
+        val path = directoryChooser.showDialog(this.currentWindow) ?: return@action
+        textPathToInputMid.text = path.absolutePath
+      }
 
-    buttonSelectNeutrino.action {
-      val directoryChooser = DirectoryChooser()
-      directoryChooser.title = "ディレクトリ選択"
-      val path = directoryChooser.showDialog(this.currentWindow)
-      textPathToInputMid.text = path.absolutePath
+      buttonSelectMidi.action {
+        val chooser = FileChooser()
+        chooser.title = "midiを選択"
+        chooser.extensionFilters.add(FileChooser.ExtensionFilter("MIDI", "*.mid", "*.midi", "*.MID", "*.MIDI"))
+        val path = chooser.showOpenDialog(this.currentWindow) ?: return@action
+        textPathToInputMid.text = path.absolutePath
+      }
+
+      buttonSelectLyric.action {
+        val chooser = FileChooser()
+        val path = chooser.showOpenDialog(this.currentWindow) ?: return@action
+        textPathToLyric.text = path.absolutePath
+      }
     }
   }
 
