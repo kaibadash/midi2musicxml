@@ -5,6 +5,7 @@ import javafx.scene.control.TextArea
 import javafx.scene.control.TextField
 import javafx.scene.layout.AnchorPane
 import javafx.stage.DirectoryChooser
+import javafx.stage.FileChooser
 import tornadofx.*
 import java.io.File
 
@@ -32,11 +33,19 @@ class MainView : View("Midi2MusicXML") {
       textPathToNeutrino.text = dir?.absolutePath
     }
 
+    buttonSelectMidi.action {
+      val chooser = FileChooser()
+      chooser.title = "midiを選択"
+      chooser.extensionFilters.add(FileChooser.ExtensionFilter("MIDI", "*.mid", "*.midi", "*.MID", "*.MIDI"))
+      val path = chooser.showOpenDialog(this.currentWindow)
+      textPathToNeutrino.text = path.absolutePath
+    }
+
     buttonSelectNeutrino.action {
       val directoryChooser = DirectoryChooser()
       directoryChooser.title = "ディレクトリ選択"
       val path = directoryChooser.showDialog(this.currentWindow)
-      textPathToNeutrino.text = path.absolutePath
+      textPathToInputMid.text = path.absolutePath
     }
   }
 
