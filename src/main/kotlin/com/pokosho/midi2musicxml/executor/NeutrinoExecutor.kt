@@ -2,7 +2,6 @@ package com.pokosho.midi2musicxml.executor
 
 import java.io.File
 
-
 class NeutrinoExecutor(val dirNuetrino: String, val pathToMusicXML: String,
                        val singer: Singer = Singer.Kiritan,
                        val pitchShift: Double = 1.0, val formantShift: Double = 1.0) {

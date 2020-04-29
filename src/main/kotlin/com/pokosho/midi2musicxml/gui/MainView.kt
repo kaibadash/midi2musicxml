@@ -12,6 +12,7 @@ import javafx.stage.FileChooser
 import tornadofx.*
 import java.io.File
 import java.util.concurrent.Executors
+import java.util.prefs.Preferences
 
 
 /**
@@ -35,6 +36,7 @@ class MainView : View("Midi2MusicXML") {
       this.currentStage?.isResizable = false
       this.currentStage?.icons?.add(Image(MainView::class.java.getResourceAsStream("/crab.png")))
       lazySearchNeutrino()
+      loadFromPreference()
 
       buttonSelectNeutrino.action {
         val directoryChooser = DirectoryChooser()
@@ -75,6 +77,7 @@ class MainView : View("Midi2MusicXML") {
 
   private fun validate(): Boolean {
     textMessage.text = ""
+    saveToPreference()
     listOf(textPathToNeutrino.text, textPathToLyric.text, textPathToInputMid.text).forEach {
       if (!File(it).exists()) {
         textMessage.text = "実行に必要なファイル(${textPathToLyric.text})が見つかりませんでした。"
@@ -131,6 +134,24 @@ class MainView : View("Midi2MusicXML") {
     val task = NeutrinoTask(textPathToNeutrino.text, textPathToInputMid.text, lyric)
     textMessage.textProperty().bind(task.messageProperty())
     executorService.submit(task)
+  }
+
+  private fun saveToPreference() {
+    val preference = Preferences.userRoot()
+    listOf(textPathToNeutrino, textPathToInputMid, textPathToLyric).forEach {
+      preference.put(it.id, it.text)
+    }
+    preference.sync()
+  }
+
+  private fun loadFromPreference() {
+    val preference = Preferences.userRoot()
+    listOf(textPathToNeutrino, textPathToInputMid, textPathToLyric).forEach {
+      val data = preference.get(it.id, "")
+      if (data.isNotBlank()) {
+        it.text = data
+      }
+    }
   }
 }
 
