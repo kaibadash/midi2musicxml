@@ -6,6 +6,7 @@ import com.pokosho.midi2musicxml.executor.NeutrinoExecutor
 import javafx.scene.control.Button
 import javafx.scene.control.TextArea
 import javafx.scene.control.TextField
+import javafx.scene.image.Image
 import javafx.scene.layout.AnchorPane
 import javafx.stage.DirectoryChooser
 import javafx.stage.FileChooser
@@ -31,6 +32,7 @@ class MainView : View("Midi2MusicXML") {
   init {
     run {
       this.currentStage?.isResizable = false
+      this.currentStage?.icons?.add(Image(MainView::class.java.getResourceAsStream("/crab.png")))
       lazySearchNeutrino()
 
       buttonSelectNeutrino.action {
