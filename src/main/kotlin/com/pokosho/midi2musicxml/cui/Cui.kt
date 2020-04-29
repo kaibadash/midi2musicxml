@@ -2,6 +2,8 @@ package com.pokosho.midi2musicxml.cui
 
 import com.pokosho.midi2musicxml.MidiParser
 import com.pokosho.midi2musicxml.executor.NeutrinoExecutor
+import com.pokosho.midi2musicxml.gui.Midi2MusicXMLGUI
+import javafx.application.Application.launch
 
 /**
  * Command Line Interface.
@@ -37,8 +39,4 @@ class Cui(val args: Array<String>) {
     }
     return 0
   }
-}
-
-fun main(args: Array<String>) {
-  Cui(args).run()
 }
