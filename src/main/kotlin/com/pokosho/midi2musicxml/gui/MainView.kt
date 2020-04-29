@@ -56,6 +56,17 @@ class MainView : View("Midi2MusicXML") {
         val path = chooser.showOpenDialog(this.currentWindow) ?: return@action
         textPathToLyric.text = path.absolutePath
       }
+
+      buttonPreview.action { validate() }
+    }
+  }
+
+  private fun validate() {
+    textMessage.text = ""
+    listOf(textPathToNeutrino.text, textPathToLyric.text, textPathToInputMid.text).forEach {
+      if (!File(it).exists()) {
+        textMessage.text = "実行に必要なファイル(${textPathToLyric.text})が見つかりませんでした。"
+      }
     }
   }
 
