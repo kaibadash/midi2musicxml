@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="243.0" prefWidth="382.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button fx:id="sampleButton" layoutX="257.0" layoutY="128.0" mnemonicParsing="false" text="覇王翔吼拳" prefWidth="100.0" />
+      <TextArea fx:id="sampleTextArea" layoutX="21.0" layoutY="19.0" prefHeight="200.0" prefWidth="200.0" />
+   </children>
+</AnchorPane>
