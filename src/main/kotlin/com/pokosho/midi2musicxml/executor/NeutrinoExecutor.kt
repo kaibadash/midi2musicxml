@@ -9,7 +9,7 @@ class NeutrinoExecutor(val dirNuetrino: String, val pathToMusicXML: String,
   /**
    * NOTE: 今後NEUTRINOのインタフェースがどうなるかわからないためベタ書き
    */
-  fun execute() {
+  fun execute(): String {
     val target = baseFileName(pathToMusicXML)
 
     val labelFull = "${target}-full.lab"
@@ -48,6 +48,7 @@ class NeutrinoExecutor(val dirNuetrino: String, val pathToMusicXML: String,
     println(builder.command().joinToString(" "))
     process = builder.start()
     process.waitFor()
+    return output
   }
 
   private fun baseFileName(path: String): String {
