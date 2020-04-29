@@ -6,8 +6,8 @@ package com.pokosho.midi2musicxml
  */
 class PronouncedWord(val word: String) {
   companion object {
-    fun toPronouncedWords(string: String): List<PronouncedWord> {
-      val splitter = "\n"
+    fun toPronouncedWords(string: String, withLineBreak: Boolean = false): List<PronouncedWord> {
+      val splitter = if (withLineBreak) "splitter-${Math.random()}" else "\n"
       return string.replace("(.[ぁぃぅぇぉゃゅょァィゥェォャュョ]?)".toRegex(), "$1${splitter}")
         .trim().split(splitter).map {
           PronouncedWord(it)

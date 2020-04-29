@@ -5,6 +5,8 @@ plugins {
   kotlin("jvm") version "1.3.71"
   id("java")
   id("com.github.johnrengelman.shadow") version "5.2.0"
+  id("application")
+  id("org.openjfx.javafxplugin") version "0.0.8"
 }
 
 group = "com.pokosho.midi2musicxml"
@@ -22,6 +24,8 @@ dependencies {
   implementation("org.slf4j:slf4j-log4j12:1.7.30")
   implementation("com.google.guava:guava:29.0-jre")
   implementation("com.atilika.kuromoji:kuromoji-ipadic:0.9.0")
+  implementation("org.openjfx:javafx-controls:14")
+  implementation("no.tornado:tornadofx:1.7.17")
 
   testImplementation("org.mockito:mockito-junit-jupiter:3.3.3")
   testImplementation("org.junit.jupiter:junit-jupiter-engine:5.6.2")
@@ -37,7 +41,7 @@ tasks.withType<KotlinCompile> {
       "-Xjsr305=strict",
       "-Xopt-in=kotlin.ExperimentalUnsignedTypes"
     )
-    jvmTarget = "1.8"
+    jvmTarget = "11"
   }
 }
 
@@ -55,4 +59,13 @@ tasks {
   build {
     dependsOn(shadowJar)
   }
+}
+
+javafx {
+  version = "11.0.2"
+  modules = listOf("javafx.controls", "javafx.graphics", "javafx.fxml")
+}
+
+application {
+  mainClassName = "com.pokosho.midi2musicxml.MainKt"
 }

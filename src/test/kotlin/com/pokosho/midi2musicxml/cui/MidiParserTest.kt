@@ -55,10 +55,9 @@ class MidiParserTest {
 
   @Test
   fun testSpecialChar1() {
-    val parser = getParser("src/test/resources/test_short.mid", "ふぁい")
-    Assertions.assertEquals(0, parser.warnings.size)
-    Assertions.assertEquals(2, parser.lyric.count())
-    Assertions.assertEquals("ふぁ", parser.lyric[0].toString())
-    Assertions.assertEquals("い", parser.lyric[1].toString())
+    val parser = getParser("src/test/resources/test_short.mid", "ファイト")
+    Assertions.assertEquals(3, parser.lyricWordCount())
+    Assertions.assertEquals("ふぁ", parser.lyric.charAt(0).toString())
+    Assertions.assertEquals("い", parser.lyric.charAt(1).toString())
   }
 }

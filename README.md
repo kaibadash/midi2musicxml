@@ -4,6 +4,10 @@
 This is a converter from MIDI and Lyric text to musicxml for [NEUTRINO](https://n3utrino.work/).
 It's on WIP but you can try and contribute :)
 
+## Requirements
+
+- Java 11 and Later
+
 ## Usage
 
 ### CUI
@@ -13,7 +17,7 @@ midi2musicxml [midi file] [options]
 
 OPTIONS
 -t input-text-file-lyrics
-  Specify a input file of lyrics. STDIN is read if the file is not specified. 
+  Specify a input file of lyrics. STDIN is read if the file is not specified.
 -o output-file-xml
   Specify a path to the output xml file. By default, the output is [path to mid].musicxml.
 -n path-to-neutrino-directory
