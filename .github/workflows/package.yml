@@ -22,6 +22,6 @@ jobs:
         run: ./gradlew shadowJar
       - uses: actions/upload-artifact@v1
         with:
-          name: Package
+          name: Package_${{ matrix.os }}
           path: build/libs
 
