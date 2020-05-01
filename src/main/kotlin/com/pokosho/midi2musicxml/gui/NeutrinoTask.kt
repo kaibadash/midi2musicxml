@@ -3,10 +3,11 @@ package com.pokosho.midi2musicxml.gui
 import com.pokosho.midi2musicxml.MidiParser
 import com.pokosho.midi2musicxml.executor.NeutrinoExecutor
 import javafx.concurrent.Task
+import java.io.OutputStream
 
 class NeutrinoTask(
   private val neutrinoDir: String, private val pathToMidi: String,
-  private val lyric: String) : Task<Int>() {
+  private val lyric: String, private val outputStream: OutputStream) : Task<Int>() {
 
   private var output = ""
 
@@ -15,7 +16,9 @@ class NeutrinoTask(
     parser.parse(pathToMidi, lyric)
     val pathToMusicXML = pathToMidi.split(".").dropLast(1).joinToString(".") + ".musicxml"
     parser.generateXML(pathToMusicXML)
-    this.output = NeutrinoExecutor(neutrinoDir, pathToMusicXML).execute()
+    val executor = NeutrinoExecutor(neutrinoDir, pathToMusicXML)
+    executor.outputStream = outputStream
+    output = executor.execute()
     return 0
   }
 

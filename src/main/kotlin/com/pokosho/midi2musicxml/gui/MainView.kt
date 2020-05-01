@@ -131,7 +131,7 @@ class MainView : View("Midi2MusicXML") {
     }
     lyric = lyric.replace("\r", "").split("\n").joinToString("")
     val executorService = Executors.newSingleThreadExecutor()
-    val task = NeutrinoTask(textPathToNeutrino.text, textPathToInputMid.text, lyric)
+    val task = NeutrinoTask(textPathToNeutrino.text, textPathToInputMid.text, lyric, textMessage.)
     textMessage.textProperty().bind(task.messageProperty())
     executorService.submit(task)
   }
