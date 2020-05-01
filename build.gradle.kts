@@ -13,6 +13,8 @@ group = "com.pokosho.midi2musicxml"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
+val javafxVersion = "11.0.2"
+
 repositories {
   mavenCentral()
 }
@@ -26,6 +28,9 @@ dependencies {
   implementation("com.atilika.kuromoji:kuromoji-ipadic:0.9.0")
   implementation("org.openjfx:javafx-controls:14")
   implementation("no.tornado:tornadofx:1.7.17")
+  compileOnly("org.openjfx:javafx-graphics:$javafxVersion.version:win")
+  compileOnly("org.openjfx:javafx-graphics:$javafxVersion:linux")
+  compileOnly("org.openjfx:javafx-graphics:$javafxVersion:mac")
 
   testImplementation("org.mockito:mockito-junit-jupiter:3.3.3")
   testImplementation("org.junit.jupiter:junit-jupiter-engine:5.6.2")
@@ -47,7 +52,7 @@ tasks.withType<KotlinCompile> {
 
 tasks {
   named<ShadowJar>("shadowJar") {
-    archiveBaseName.set("shadow")
+    archiveBaseName.set("midi2musicxml")
     mergeServiceFiles()
     manifest {
       attributes(mapOf("Main-Class" to "com.github.csolem.gradle.shadow.kotlin.example.App"))
@@ -62,7 +67,7 @@ tasks {
 }
 
 javafx {
-  version = "11.0.2"
+  version = javafxVersion
   modules = listOf("javafx.controls", "javafx.graphics", "javafx.fxml")
 }
 
