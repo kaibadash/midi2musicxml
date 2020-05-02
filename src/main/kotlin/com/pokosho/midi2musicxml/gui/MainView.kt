@@ -90,18 +90,26 @@ class MainView : View("Midi2MusicXML") {
   private fun lazySearchNeutrino() {
     val env = System.getenv()
     var targets = listOf("/Applications", "~/Desktop", "~/Documents", "~/")
+    var neutrinoExt = ""
     if (System.getProperty("os.name").toLowerCase().startsWith("windows")) {
-      targets = listOf(env["HOMEPATH"] ?: "", env["ProgramFiles(x86)"] ?: "", env["ProgramFiles"]
-        ?: "").filter { it.isNotBlank() }
+      neutrinoExt = ".exe"
+      targets = listOf(
+              env["USERPROFILE"] ?: "",
+              env["ProgramFiles(x86)"] ?: "",
+              env["ProgramFiles"] ?: "",
+              env["USERPROFILE"] ?: "" + "\\Desktop").filter { it.isNotBlank() }
     }
     var path = ""
     run {
       targets.forEach {
         val dir = File(it)
         val files = dir.listFiles()
-        val founds = files?.filter { it.name == "NEUTRINO" } ?: return@forEach
+        val founds = files?.filter {
+          println(it.name)
+          it.name == "NEUTRINO"
+        } ?: return@forEach
         if (founds.isNotEmpty() && founds.first().isDirectory) {
-          if (File(founds.first().absolutePath + "/bin/NEUTRINO").exists()) {
+          if (File(founds.first().absolutePath + "/bin/NEUTRINO${neutrinoExt}").exists()) {
             path = founds.first().absolutePath
             return@run
           }
