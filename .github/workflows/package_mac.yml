@@ -1,27 +1,29 @@
-name: package
+name: package_mac
 
 on:
   push:
     branches:
       - master
+      - 43
 
 jobs:
   build:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macos-latest, windows-latest, ubuntu-18.04]
+        os: [macos-latest]
 
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK
         uses: actions/setup-java@v1
         with:
-          java-version: 11
+          java-version: 14
       - name: Build with Gradle
         run: ./gradlew shadowJar
+      - name: Build installer
+        run: jpackage --main-class com.pokosho.midi2musicxml.MainKt -i build/libs -n midi2musicxml --main-jar midi2musicxml.jar --icon build/resources/main/crab.icns --app-version 0.0.1
       - uses: actions/upload-artifact@v1
         with:
           name: Package_${{ matrix.os }}
-          path: build/libs
-
+          path: midi2musicxml-0.0.1.dmg
