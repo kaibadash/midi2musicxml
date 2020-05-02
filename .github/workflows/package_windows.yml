@@ -1,0 +1,29 @@
+name: package_windows
+
+on:
+  push:
+    branches:
+      - master
+      - 43
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 14
+      - name: Build with Gradle
+        run: ./gradlew shadowJar
+
+      # A installer needs WIX tool. I was not able to build with GitHub Actions...
+      - uses: actions/upload-artifact@v1
+        with:
+          name: Package_${{ matrix.os }}
+          path: build/libs

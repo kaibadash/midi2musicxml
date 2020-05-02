@@ -52,10 +52,17 @@ tasks.withType<KotlinCompile> {
 
 tasks {
   named<ShadowJar>("shadowJar") {
-    archiveBaseName.set("midi2musicxml")
+    // val jarName = "midi2musicxml-${archiveVersion.get()}.${archiveExtension.get()}"
+    val jarName = "midi2musicxml.jar"
+    println(jarName)
+    archiveFileName.set(jarName)
     mergeServiceFiles()
     manifest {
-      attributes(mapOf("Main-Class" to "com.github.csolem.gradle.shadow.kotlin.example.App"))
+      attributes(mapOf("Main-Class" to "com.pokosho.midi2musicxml.MainKt"))
+    }
+
+    doLast {
+      println(archiveFileName.get())
     }
   }
 }
