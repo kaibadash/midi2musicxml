@@ -41,3 +41,5 @@ output/*
 *.wav
 src/test/resources/test*.musicxml
 sample/*.musicxml
+midi2musicxml*
+tmp/*
