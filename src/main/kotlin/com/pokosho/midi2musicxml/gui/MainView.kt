@@ -76,6 +76,7 @@ class MainView : View("Midi2MusicXML") {
   }
 
   private fun validate(): Boolean {
+    textMessage.textProperty().unbind()
     textMessage.text = ""
     saveToPreference()
     listOf(textPathToNeutrino.text, textPathToLyric.text, textPathToInputMid.text).forEach {
@@ -105,7 +106,6 @@ class MainView : View("Midi2MusicXML") {
         val dir = File(it)
         val files = dir.listFiles()
         val founds = files?.filter {
-          println(it.name)
           it.name == "NEUTRINO"
         } ?: return@forEach
         if (founds.isNotEmpty() && founds.first().isDirectory) {
