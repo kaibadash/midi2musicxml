@@ -22,7 +22,7 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew shadowJar
       - name: Build installer
-        run: jpackage --main-class com.pokosho.midi2musicxml.MainKt -i build/libs -n midi2musicxml --main-jar midi2musicxml.jar --icon build/resources/main/crab.icns --version ${{ env.RELEASE_VERSION }}
+        run: jpackage --main-class com.pokosho.midi2musicxml.MainKt -i build/libs -n midi2musicxml --main-jar midi2musicxml.jar --icon build/resources/main/crab.icns --app-version ${{ env.RELEASE_VERSION }}
 
       - name: Create Release
         id: create_release
