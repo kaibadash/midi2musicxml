@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "com.pokosho.midi2musicxml"
-version = "0.0.2"
+version = "0.0.3"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 val javafxVersion = "11.0.2"
