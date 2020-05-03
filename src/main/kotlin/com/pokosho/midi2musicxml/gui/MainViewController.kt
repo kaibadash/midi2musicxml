@@ -21,8 +21,6 @@ import java.util.prefs.Preferences
  * FIXME: 密です！
  */
 class MainViewController {
-  private val log: Logger = Logger.getLogger(MainViewController::class.java)
-
   @FXML
   private lateinit var anchorPane: AnchorPane
 
