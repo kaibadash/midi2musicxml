@@ -17,7 +17,7 @@ class Midi2MusicXMLGUI : App() {
     stage.scene = Scene(page)
     stage.title = i18nBundle.getString("ui.title")
     stage.isResizable = false
-    stage.icons?.add(Image(MainView::class.java.getResourceAsStream("/crab.png")))
+    stage.icons?.add(Image(MainViewController::class.java.getResourceAsStream("/crab.png")))
 
     stage.show()
   }
