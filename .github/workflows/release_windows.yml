@@ -9,7 +9,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macos-latest]
+        os: [windows-latest]
 
     steps:
       - uses: actions/checkout@v2
@@ -19,8 +19,14 @@ jobs:
           java-version: 14
       - name: Build with Gradle
         run: ./gradlew shadowJar
-      - name: Build installer
-        run: jpackage --main-class com.pokosho.midi2musicxml.MainKt -i build/libs -n midi2musicxml --main-jar midi2musicxml.jar --icon build/resources/main/crab.icns --version ${{ github.ref }}
+      - name: Copy
+        run: copy build\libs\midi2musicxml*.jar windows_script\
+
+      # A installer needs WIX tool. I was not able to build with GitHub Actions...
+      - uses: actions/upload-artifact@v1
+        with:
+          name: Package_${{ matrix.os }}
+          path: windows_script
 
       - name: Create Release
         id: create_release
@@ -40,6 +46,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./midi2musicxml-${{ github.ref }}.dmg
-          asset_name: midi2musicxml_mac.zip
+          asset_path: ./windows_script
+          asset_name: midi2musicxml_windows.zip
           asset_content_type: application/zip
