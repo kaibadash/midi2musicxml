@@ -3,14 +3,13 @@ package com.pokosho.midi2musicxml.gui
 import com.google.common.io.Files
 import com.pokosho.midi2musicxml.MidiParser
 import javafx.fxml.FXML
-import javafx.fxml.Initializable
 import javafx.scene.control.Button
 import javafx.scene.control.TextArea
 import javafx.scene.control.TextField
-import javafx.scene.image.Image
 import javafx.scene.layout.AnchorPane
 import javafx.stage.DirectoryChooser
 import javafx.stage.FileChooser
+import org.apache.log4j.Logger
 import tornadofx.*
 import java.io.File
 import java.util.*
@@ -24,24 +23,34 @@ import java.util.prefs.Preferences
 class MainViewController {
   @FXML
   private lateinit var anchorPane: AnchorPane
+
   @FXML
   private lateinit var buttonSelectNeutrino: Button
+
   @FXML
   private lateinit var buttonSelectMidi: Button
+
   @FXML
   private lateinit var buttonSelectLyric: Button
+
   @FXML
   private lateinit var buttonPreview: Button
+
   @FXML
   private lateinit var buttonGenerate: Button
+
   @FXML
   private lateinit var textPathToNeutrino: TextField
+
   @FXML
   private lateinit var textPathToInputMid: TextField
+
   @FXML
   private lateinit var textPathToLyric: TextField
+
   @FXML
   private lateinit var textPreview: TextArea
+
   @FXML
   private lateinit var textMessage: TextArea
   private var i18nBundle = ResourceBundle.getBundle("strings", Locale.getDefault())
@@ -117,7 +126,7 @@ class MainViewController {
         env["USERPROFILE"] ?: "",
         env["ProgramFiles(x86)"] ?: "",
         env["ProgramFiles"] ?: "",
-        env["USERPROFILE"] ?: "" + "\\Desktop").filter { it.isNotBlank() }
+        env["USERPROFILE"] ?: "" + "${File.separator}Desktop").filter { it.isNotBlank() }
     }
     var path = ""
     run {
@@ -128,7 +137,7 @@ class MainViewController {
           it.name == "NEUTRINO"
         } ?: return@forEach
         if (founds.isNotEmpty() && founds.first().isDirectory) {
-          if (File(founds.first().absolutePath + "/bin/NEUTRINO${neutrinoExt}").exists()) {
+          if (File(founds.first().absolutePath + "${File.separator}bin${File.separator}NEUTRINO${neutrinoExt}").exists()) {
             path = founds.first().absolutePath
             return@run
           }

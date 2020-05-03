@@ -21,7 +21,6 @@ class Warning(val warningType: WarningType, vararg values: Any) {
   fun toLocalizedString(): String {
     val bundle = ResourceBundle.getBundle("strings")
     val localized = bundle.getString("warning.${warningType.name.toLowerCase()}")
-    println(localized)
     try {
       return localized.format(*values)
     } catch (e: MissingFormatArgumentException) {
