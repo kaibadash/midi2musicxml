@@ -1,6 +1,7 @@
 package com.pokosho.midi2musicxml.cui
 
 import com.pokosho.midi2musicxml.MidiParser
+import com.pokosho.midi2musicxml.WarningType
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 
@@ -22,35 +23,35 @@ class MidiParserTest {
   fun testTooHigh() {
     val parser = getParser("src/test/resources/test_too_high.mid", "おむれつ")
     Assertions.assertEquals(1, parser.warnings.size)
-    Assertions.assertTrue(parser.warnings.first().contains("high"))
+    Assertions.assertEquals(parser.warnings.first().warningType, WarningType.NOTES_TOO_HIGH)
   }
 
   @Test
   fun testTooLow() {
     val parser = getParser("src/test/resources/test_too_low.mid", "おむれつ")
     Assertions.assertEquals(1, parser.warnings.size)
-    Assertions.assertTrue(parser.warnings.first().contains("low"))
+    Assertions.assertEquals(parser.warnings.first().warningType, WarningType.NOTES_TOO_LOW)
   }
 
   @Test
   fun testLyricIsTooShort() {
     val parser = getParser("src/test/resources/test_short.mid", "す")
     Assertions.assertEquals(1, parser.warnings.size)
-    Assertions.assertTrue(parser.warnings.first().contains("lyric"))
+    Assertions.assertEquals(parser.warnings.first().warningType, WarningType.LYRIC_COUNT_NOT_MATCH)
   }
 
   @Test
   fun testLyricIsTooLong() {
     val parser = getParser("src/test/resources/test_short.mid", "おむらいす")
     Assertions.assertEquals(1, parser.warnings.size)
-    Assertions.assertTrue(parser.warnings.first().contains("lyric"))
+    Assertions.assertEquals(parser.warnings.first().warningType, WarningType.LYRIC_COUNT_NOT_MATCH)
   }
 
   @Test
   fun testMultiTracks() {
     val parser = getParser("src/test/resources/test_multi_tracks.mid", "お")
     Assertions.assertEquals(1, parser.warnings.size)
-    Assertions.assertTrue(parser.warnings.first().contains("track"))
+    Assertions.assertEquals(parser.warnings.first().warningType, WarningType.MIDI_HASH_SOME_TRACKS)
   }
 
   @Test

@@ -10,7 +10,7 @@ import java.io.InputStream
 import java.nio.charset.Charset
 
 class Lyric {
-  private val warnings: MutableSet<String> = mutableSetOf()
+  private val warnings: MutableSet<Warning> = mutableSetOf()
   private val lyric = mutableListOf<PronouncedWord>()
   private var originalLyric: String = ""
 
@@ -36,7 +36,7 @@ class Lyric {
     }
   }
 
-  fun warnings(): Array<String> {
+  fun warnings(): Array<Warning> {
     return warnings.toTypedArray()
   }
 
@@ -60,7 +60,7 @@ class Lyric {
           return@map it.surface
         }
         if (regex.containsMatchIn(it.surface)) {
-          this.warnings.add("English or numbers words are contained. They are ignored.")
+          this.warnings.add(Warning(WarningType.INVALID_LYRIC_CHAR))
         }
         ""
       } else {
