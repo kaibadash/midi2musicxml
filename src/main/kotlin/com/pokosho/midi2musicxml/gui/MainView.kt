@@ -99,10 +99,10 @@ class MainView : View("Midi2MusicXML") {
     if (System.getProperty("os.name").toLowerCase().startsWith("windows")) {
       neutrinoExt = ".exe"
       targets = listOf(
-              env["USERPROFILE"] ?: "",
-              env["ProgramFiles(x86)"] ?: "",
-              env["ProgramFiles"] ?: "",
-              env["USERPROFILE"] ?: "" + "\\Desktop").filter { it.isNotBlank() }
+        env["USERPROFILE"] ?: "",
+        env["ProgramFiles(x86)"] ?: "",
+        env["ProgramFiles"] ?: "",
+        env["USERPROFILE"] ?: "" + "\\Desktop").filter { it.isNotBlank() }
     }
     var path = ""
     run {

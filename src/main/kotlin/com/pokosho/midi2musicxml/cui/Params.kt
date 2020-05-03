@@ -1,6 +1,8 @@
 package com.pokosho.midi2musicxml.cui
 
 import com.pokosho.midi2musicxml.Lyric
+import com.pokosho.midi2musicxml.Warning
+import com.pokosho.midi2musicxml.WarningType
 import java.io.File
 import java.io.InputStream
 
@@ -10,7 +12,7 @@ class Params(args: Array<String>, inputStream: InputStream) {
   var silent = false
   var lyricFile: String = ""
   var midiFile: String = ""
-  var warnings = mutableListOf<String>()
+  var warnings = mutableListOf<Warning>()
   var lyric: Lyric = Lyric()
   var outputPath: String = ""
 
@@ -88,7 +90,7 @@ OPTIONS
 
     if (silent) return
     if (lyric.toString().isEmpty()) {
-      this.warnings.add("Lyric is not set")
+      this.warnings.add(Warning(WarningType.NO_LYRIC))
       return
     }
     this.warnings.addAll(lyric.warnings())

@@ -59,6 +59,6 @@ class NeutrinoExecutor(val dirNuetrino: String, val pathToMusicXML: String,
     // /path/to/./file => /path/to/file
     val cleanDir = dir.replace(".${File.separator}", "")
     return "${cleanDir}${File.separator}${file.name.split(".")
-            .dropLast(1).joinToString("")}"
+      .dropLast(1).joinToString("")}"
   }
 }
