@@ -39,9 +39,8 @@ jobs:
           draft: false
           prerelease: false
 
-      - uses: montudor/action-zip@v0.1.0
-        with:
-          args: zip -qq -r ./midi2musicxml_windows.zip ./windows_script
+      - name: Zip
+        run: powershell compress-archive windows_script midi2musicxml_windows.zip
 
       - name: Upload Release Asset
         id: upload-release-asset
