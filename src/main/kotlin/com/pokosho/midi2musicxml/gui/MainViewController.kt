@@ -64,7 +64,7 @@ class MainViewController {
         directoryChooser.title = i18nBundle.getString("ui.dialog.select_neutrino")
         directoryChooser.initialDirectory = File(textPathToNeutrino.text)
         val path = directoryChooser.showDialog(anchorPane.scene.window) ?: return@action
-        textPathToInputMid.text = path.absolutePath
+        textPathToNeutrino.text = path.absolutePath
       }
 
       buttonSelectMidi.action {
