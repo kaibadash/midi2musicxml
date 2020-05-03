@@ -30,8 +30,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          tag_name: ${{ github.ref }}_mac
+          release_name: Release ${{ github.ref }}_mac
           draft: false
           prerelease: false
 
@@ -44,3 +44,4 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./midi2musicxml-${{ env.RELEASE_VERSION }}.dmg
           asset_name: midi2musicxml_mac.dmg
+          asset_content_type: application/octet-stream
