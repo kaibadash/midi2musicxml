@@ -21,7 +21,7 @@ class MidiParser {
   var notes: List<BaseNote> = mutableListOf()
   var resolution: Int = 0
   var lyric: Lyric = Lyric()
-  val warnings = mutableListOf<String>()
+  val warnings = mutableListOf<Warning>()
 
   fun parse(pathToMidi: String, lyricString: String) {
     val sequence = MidiSystem.getSequence(File(pathToMidi))
@@ -29,7 +29,7 @@ class MidiParser {
     this.lyric = Lyric.fromString(lyricString)
     val notes = arrayListOf<Note>()
     if (sequence.tracks.size > 2) {
-      warnings.add("MIDI has some tracks(${sequence.tracks.size}). Midi2musicxml uses first track.")
+      warnings.add(Warning(WarningType.MIDI_HASH_SOME_TRACKS, sequence.tracks.size))
     }
     // 0番目はmeta dataなので1番目を取得
     val track = sequence.tracks[1]
@@ -103,15 +103,15 @@ class MidiParser {
     return ((notes.count { it.octave <= TOO_LOW_OCTAVE }.toDouble() / notes.count()) * 100).toInt()
   }
 
-  private fun validate(): List<String> {
+  private fun validate(): List<Warning> {
     if (notesCount() != lyric.count()) {
-      warnings.add("Number of notes(${notesCount()}) doesn't match number of lyric characters (${lyric.count()}).")
+      warnings.add(Warning(WarningType.LYRIC_COUNT_NOT_MATCH, notesCount(), lyric.count()))
     }
     if (percentageOfTooHigh() > WARN_PARCENTAGE) {
-      warnings.add("Many notes(${notesCount()}%) are too high. Valid octave?")
+      warnings.add(Warning(WarningType.NOTES_TOO_HIGH, notesCount()))
     }
     if (percentageOfTooLow() > WARN_PARCENTAGE) {
-      warnings.add("Many notes(${notesCount()}%) are too low. Valid octave?")
+      warnings.add(Warning(WarningType.NOTES_TOO_LOW, notesCount()))
     }
     return warnings
   }
