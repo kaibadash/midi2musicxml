@@ -1,0 +1,54 @@
+name: release_windows
+
+on:
+  push:
+    tags:
+      - "v*"
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 14
+      - name: Build with Gradle
+        run: ./gradlew shadowJar
+      - name: Copy
+        run: copy build\libs\midi2musicxml*.jar windows_script\
+
+      # A installer needs WIX tool. I was not able to build with GitHub Actions...
+      - uses: actions/upload-artifact@v1
+        with:
+          name: Package_${{ matrix.os }}
+          path: windows_script
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}_windows
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+
+      - name: Zip
+        run: powershell compress-archive windows_script/* midi2musicxml_windows.zip
+
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./midi2musicxml_windows.zip
+          asset_name: midi2musicxml_windows.zip
+          asset_content_type: application/zip

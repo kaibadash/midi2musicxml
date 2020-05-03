@@ -39,9 +39,17 @@ OPTIONS
 
 ![image](https://user-images.githubusercontent.com/391549/80907978-9aadb280-8d56-11ea-881b-74c176cd01a8.png)
 
-## Download
+## Download and Setup
 
-WIP: You can get an executable jar from [CI](https://github.com/kaibadash/midi2musicxml/actions?query=workflow%3Apackage).
+You can download from [release page](https://github.com/kaibadash/midi2musicxml/releases).
+
+### Mac
+
+Just install it.
+
+### Windows
+
+[Read me](https://github.com/kaibadash/midi2musicxml/blob/master/windows_script/README.md)
 
 ## Contributing
 

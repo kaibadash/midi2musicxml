@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master
-      - hotfix/windows_readme
 
 jobs:
   build:
@@ -23,7 +22,6 @@ jobs:
         run: ./gradlew shadowJar
       - name: Copy
         run: copy build\libs\midi2musicxml*.jar windows_script\
-
 
       # A installer needs WIX tool. I was not able to build with GitHub Actions...
       - uses: actions/upload-artifact@v1
