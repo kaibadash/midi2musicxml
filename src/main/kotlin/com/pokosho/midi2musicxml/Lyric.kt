@@ -2,7 +2,6 @@ package com.pokosho.midi2musicxml
 
 import com.atilika.kuromoji.ipadic.Tokenizer
 import com.google.common.io.ByteSource
-import com.google.common.io.Files
 import com.pokosho.midi2musicxml.extension.kana2hiragana
 import java.io.File
 import java.io.IOException
@@ -17,7 +16,7 @@ class Lyric {
   constructor()
 
   constructor(pathToFile: String) {
-    parse(toHiragana(Files.readLines(File(pathToFile), Charsets.UTF_8).joinToString("\n")))
+    parse(toHiragana(File(pathToFile).readText(Charsets.UTF_8)))
   }
 
   constructor(stdin: InputStream) {

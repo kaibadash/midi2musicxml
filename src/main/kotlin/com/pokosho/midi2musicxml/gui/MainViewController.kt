@@ -1,6 +1,5 @@
 package com.pokosho.midi2musicxml.gui
 
-import com.google.common.io.Files
 import com.pokosho.midi2musicxml.MidiParser
 import javafx.fxml.FXML
 import javafx.scene.control.Button
@@ -9,8 +8,7 @@ import javafx.scene.control.TextField
 import javafx.scene.layout.AnchorPane
 import javafx.stage.DirectoryChooser
 import javafx.stage.FileChooser
-import org.apache.log4j.Logger
-import tornadofx.*
+import tornadofx.action
 import java.io.File
 import java.util.*
 import java.util.concurrent.Executors
@@ -155,7 +153,7 @@ class MainViewController {
     val parser = MidiParser()
     parser.parse(
       textPathToInputMid.text,
-      Files.readLines(File(textPathToLyric.text), Charsets.UTF_8).joinToString("\n"))
+      File(textPathToLyric.text).readText())
     textMessage.text = parser.warnings.map { it.toLocalizedString() }.joinToString("\n")
     textPreview.text = parser.lyricForPreview()
   }
@@ -163,7 +161,7 @@ class MainViewController {
   private fun execute() {
     var lyric = textPreview.text
     if (lyric.isBlank()) {
-      lyric = Files.readLines(File(textPathToLyric.text), Charsets.UTF_8).joinToString("\n")
+      lyric = File(textPathToLyric.text).readText()
     }
     lyric = lyric.replace("\r", "").split("\n").joinToString("")
     val executorService = Executors.newSingleThreadExecutor()

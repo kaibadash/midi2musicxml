@@ -43,3 +43,4 @@ src/test/resources/test*.musicxml
 sample/*.musicxml
 tmp/*
 midi2musicxml*dmg
+*log
