@@ -2,7 +2,14 @@
 ![](https://github.com/kaibadash/midi2musicxml/workflows/build/badge.svg)
 
 This is a converter from MIDI and Lyric text to musicxml for [NEUTRINO](https://n3utrino.work/).
-It's on WIP but you can try and contribute :)
+
+## Features
+
+- Convert from a MIDI file and text file to musicxml.
+- Support Kanji lyric.
+- Call NEUTRINO.
+- Support both GUI and CUI
+- English / Japanese
 
 ## Requirements
 
@@ -30,7 +37,7 @@ OPTIONS
 
 ### GUI
 
-WIP
+![image](https://user-images.githubusercontent.com/391549/80907978-9aadb280-8d56-11ea-881b-74c176cd01a8.png)
 
 ## Download
 
