@@ -41,6 +41,7 @@ class MainView : View("Midi2MusicXML") {
       buttonSelectNeutrino.action {
         val directoryChooser = DirectoryChooser()
         directoryChooser.title = "ディレクトリを選択"
+        directoryChooser.initialDirectory = File(textPathToNeutrino.text)
         val path = directoryChooser.showDialog(this.currentWindow) ?: return@action
         textPathToInputMid.text = path.absolutePath
       }
@@ -49,12 +50,15 @@ class MainView : View("Midi2MusicXML") {
         val chooser = FileChooser()
         chooser.title = "MIDIを選択"
         chooser.extensionFilters.add(FileChooser.ExtensionFilter("MIDI", "*.mid", "*.midi", "*.MID", "*.MIDI"))
+        chooser.initialDirectory = File(textPathToInputMid.text).parentFile
         val path = chooser.showOpenDialog(this.currentWindow) ?: return@action
         textPathToInputMid.text = path.absolutePath
       }
 
       buttonSelectLyric.action {
         val chooser = FileChooser()
+        chooser.extensionFilters.add(FileChooser.ExtensionFilter("MIDI", "*.txt", "*.text", ".md"))
+        chooser.initialDirectory = File(textPathToLyric.text).parentFile
         val path = chooser.showOpenDialog(this.currentWindow) ?: return@action
         textPathToLyric.text = path.absolutePath
       }
