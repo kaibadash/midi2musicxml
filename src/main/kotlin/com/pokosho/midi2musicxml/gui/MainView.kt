@@ -11,6 +11,7 @@ import javafx.stage.DirectoryChooser
 import javafx.stage.FileChooser
 import tornadofx.*
 import java.io.File
+import java.util.*
 import java.util.concurrent.Executors
 import java.util.prefs.Preferences
 
@@ -30,6 +31,7 @@ class MainView : View("Midi2MusicXML") {
   private val textPathToLyric: TextField by fxid("textPathToLyric")
   private val textPreview: TextArea by fxid("textPreview")
   private val textMessage: TextArea by fxid("textMessage")
+  private val i18nBundle = ResourceBundle.getBundle("strings", Locale.getDefault())
 
   init {
     run {
@@ -40,7 +42,7 @@ class MainView : View("Midi2MusicXML") {
 
       buttonSelectNeutrino.action {
         val directoryChooser = DirectoryChooser()
-        directoryChooser.title = "ディレクトリを選択"
+        directoryChooser.title = i18nBundle.getString("ui.dialog.select_neutrino")
         directoryChooser.initialDirectory = File(textPathToNeutrino.text)
         val path = directoryChooser.showDialog(this.currentWindow) ?: return@action
         textPathToInputMid.text = path.absolutePath
@@ -48,7 +50,7 @@ class MainView : View("Midi2MusicXML") {
 
       buttonSelectMidi.action {
         val chooser = FileChooser()
-        chooser.title = "MIDIを選択"
+        chooser.title = i18nBundle.getString("ui.dialog.select_midi")
         chooser.extensionFilters.add(FileChooser.ExtensionFilter("MIDI", "*.mid", "*.midi", "*.MID", "*.MIDI"))
         chooser.initialDirectory = File(textPathToInputMid.text).parentFile
         val path = chooser.showOpenDialog(this.currentWindow) ?: return@action
@@ -57,6 +59,7 @@ class MainView : View("Midi2MusicXML") {
 
       buttonSelectLyric.action {
         val chooser = FileChooser()
+        chooser.title = i18nBundle.getString("ui.dialog.select_lyric")
         chooser.extensionFilters.add(FileChooser.ExtensionFilter("MIDI", "*.txt", "*.text", ".md"))
         chooser.initialDirectory = File(textPathToLyric.text).parentFile
         val path = chooser.showOpenDialog(this.currentWindow) ?: return@action

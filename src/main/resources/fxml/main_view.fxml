@@ -2,25 +2,26 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
+<?scenebuilder-preview-i18n-resource strings.properties ?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="618.0"
             prefWidth="614.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
   <children>
-    <Label layoutX="14.0" layoutY="14.0" prefHeight="17.0" prefWidth="302.0" text="NEUTRINOのインストールディレクトリ"/>
-    <Label layoutX="14.0" layoutY="215.0" prefHeight="17.0" prefWidth="233.0" text="歌詞プレビュー"/>
-    <Button fx:id="buttonSelectNeutrino" layoutX="468.0" layoutY="31.0" mnemonicParsing="false" text="選択"/>
+    <Label layoutX="14.0" layoutY="14.0" prefHeight="17.0" prefWidth="302.0" text="%ui.path_to_neutrino" />
+    <Label layoutX="14.0" layoutY="215.0" prefHeight="17.0" prefWidth="233.0" text="%ui.lyric_preview"/>
+    <Button fx:id="buttonSelectNeutrino" layoutX="468.0" layoutY="31.0" mnemonicParsing="false" text="%ui.button.select"/>
     <Button fx:id="buttonPreview" layoutX="122.0" layoutY="181.0" mnemonicParsing="false" prefHeight="27.0"
-            prefWidth="191.0" text="プレビュー"/>
+            prefWidth="191.0" text="%ui.button.preview"/>
     <Button fx:id="buttonGenerate" layoutX="319.0" layoutY="181.0" mnemonicParsing="false" prefHeight="27.0"
-            prefWidth="191.0" text="生成"/>
+            prefWidth="191.0" text="%ui.button.submit"/>
     <TextField fx:id="textPathToNeutrino" layoutX="14.0" layoutY="31.0" prefHeight="27.0" prefWidth="449.0"/>
     <TextField fx:id="textPathToLyric" layoutX="14.0" layoutY="137.0" prefHeight="27.0" prefWidth="449.0"/>
-    <Label layoutX="14.0" layoutY="65.0" text="MIDI"/>
-    <Label layoutX="14.0" layoutY="118.0" text="歌詞ファイル(UTF-8)"/>
-    <Button fx:id="buttonSelectMidi" layoutX="468.0" layoutY="82.0" mnemonicParsing="false" text="選択"/>
+    <Label layoutX="14.0" layoutY="65.0" text="%ui.lyric_preview"/>
+    <Label layoutX="14.0" layoutY="118.0" text="%ui.lyric"/>
+    <Button fx:id="buttonSelectMidi" layoutX="468.0" layoutY="82.0" mnemonicParsing="false" text="%ui.button.select"/>
     <TextField fx:id="textPathToInputMid" layoutX="14.0" layoutY="82.0" prefHeight="27.0" prefWidth="449.0"/>
-    <Button fx:id="buttonSelectLyric" layoutX="468.0" layoutY="137.0" mnemonicParsing="false" text="選択"/>
+    <Button fx:id="buttonSelectLyric" layoutX="468.0" layoutY="137.0" mnemonicParsing="false" text="%ui.button.select"/>
     <TextArea fx:id="textPreview" layoutX="14.0" layoutY="233.0" prefHeight="218.0" prefWidth="590.0"/>
-    <Label layoutX="14.0" layoutY="457.0" prefHeight="17.0" prefWidth="233.0" text="メッセージ"/>
+    <Label layoutX="14.0" layoutY="457.0" prefHeight="17.0" prefWidth="233.0" text="%ui.message"/>
     <TextArea fx:id="textMessage" layoutX="14.0" layoutY="474.0" prefHeight="134.0" prefWidth="590.0"/>
   </children>
 </AnchorPane>
