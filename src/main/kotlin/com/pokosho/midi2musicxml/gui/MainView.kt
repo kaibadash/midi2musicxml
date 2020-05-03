@@ -2,6 +2,8 @@ package com.pokosho.midi2musicxml.gui
 
 import com.google.common.io.Files
 import com.pokosho.midi2musicxml.MidiParser
+import javafx.fxml.FXML
+import javafx.fxml.Initializable
 import javafx.scene.control.Button
 import javafx.scene.control.TextArea
 import javafx.scene.control.TextField
@@ -19,24 +21,34 @@ import java.util.prefs.Preferences
 /**
  * FIXME: 密です！
  */
-class MainView : View("Midi2MusicXML") {
-  override val root: AnchorPane by fxml("/fxml/main_view.fxml")
-  private val buttonSelectNeutrino: Button by fxid("buttonSelectNeutrino")
-  private val buttonSelectMidi: Button by fxid("buttonSelectMidi")
-  private val buttonSelectLyric: Button by fxid("buttonSelectLyric")
-  private val buttonPreview: Button by fxid("buttonPreview")
-  private val buttonGenerate: Button by fxid("buttonGenerate")
-  private val textPathToNeutrino: TextField by fxid("textPathToNeutrino")
-  private val textPathToInputMid: TextField by fxid("textPathToInputMid")
-  private val textPathToLyric: TextField by fxid("textPathToLyric")
-  private val textPreview: TextArea by fxid("textPreview")
-  private val textMessage: TextArea by fxid("textMessage")
-  private val i18nBundle = ResourceBundle.getBundle("strings", Locale.getDefault())
+class MainView {
+  @FXML
+  private lateinit var anchorPane: AnchorPane
+  @FXML
+  private lateinit var buttonSelectNeutrino: Button
+  @FXML
+  private lateinit var buttonSelectMidi: Button
+  @FXML
+  private lateinit var buttonSelectLyric: Button
+  @FXML
+  private lateinit var buttonPreview: Button
+  @FXML
+  private lateinit var buttonGenerate: Button
+  @FXML
+  private lateinit var textPathToNeutrino: TextField
+  @FXML
+  private lateinit var textPathToInputMid: TextField
+  @FXML
+  private lateinit var textPathToLyric: TextField
+  @FXML
+  private lateinit var textPreview: TextArea
+  @FXML
+  private lateinit var textMessage: TextArea
+  private var i18nBundle = ResourceBundle.getBundle("strings", Locale.getDefault())
 
-  init {
+  @FXML
+  fun initialize() {
     run {
-      this.currentStage?.isResizable = false
-      this.currentStage?.icons?.add(Image(MainView::class.java.getResourceAsStream("/crab.png")))
       lazySearchNeutrino()
       loadFromPreference()
 
@@ -44,7 +56,7 @@ class MainView : View("Midi2MusicXML") {
         val directoryChooser = DirectoryChooser()
         directoryChooser.title = i18nBundle.getString("ui.dialog.select_neutrino")
         directoryChooser.initialDirectory = File(textPathToNeutrino.text)
-        val path = directoryChooser.showDialog(this.currentWindow) ?: return@action
+        val path = directoryChooser.showDialog(anchorPane.scene.window) ?: return@action
         textPathToInputMid.text = path.absolutePath
       }
 
@@ -53,7 +65,7 @@ class MainView : View("Midi2MusicXML") {
         chooser.title = i18nBundle.getString("ui.dialog.select_midi")
         chooser.extensionFilters.add(FileChooser.ExtensionFilter("MIDI", "*.mid", "*.midi", "*.MID", "*.MIDI"))
         chooser.initialDirectory = File(textPathToInputMid.text).parentFile
-        val path = chooser.showOpenDialog(this.currentWindow) ?: return@action
+        val path = chooser.showOpenDialog(anchorPane.scene.window) ?: return@action
         textPathToInputMid.text = path.absolutePath
       }
 
@@ -62,7 +74,7 @@ class MainView : View("Midi2MusicXML") {
         chooser.title = i18nBundle.getString("ui.dialog.select_lyric")
         chooser.extensionFilters.add(FileChooser.ExtensionFilter("MIDI", "*.txt", "*.text", ".md"))
         chooser.initialDirectory = File(textPathToLyric.text).parentFile
-        val path = chooser.showOpenDialog(this.currentWindow) ?: return@action
+        val path = chooser.showOpenDialog(anchorPane.scene.window) ?: return@action
         textPathToLyric.text = path.absolutePath
       }
 
