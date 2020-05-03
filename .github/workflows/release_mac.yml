@@ -17,10 +17,12 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 14
+      - name: Get tag
+        run: echo ::set-env name=RELEASE_VERSION::${GITHUB_REF:10}
       - name: Build with Gradle
         run: ./gradlew shadowJar
       - name: Build installer
-        run: jpackage --main-class com.pokosho.midi2musicxml.MainKt -i build/libs -n midi2musicxml --main-jar midi2musicxml.jar --icon build/resources/main/crab.icns --version ${{ github.ref }}
+        run: jpackage --main-class com.pokosho.midi2musicxml.MainKt -i build/libs -n midi2musicxml --main-jar midi2musicxml.jar --icon build/resources/main/crab.icns --version ${{ env.RELEASE_VERSION }}
 
       - name: Create Release
         id: create_release
@@ -32,9 +34,6 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
-
-      - name: Get tag
-        run: echo ::set-env name=RELEASE_VERSION::${GITHUB_REF:10}
 
       - name: Upload Release Asset
         id: upload-release-asset
