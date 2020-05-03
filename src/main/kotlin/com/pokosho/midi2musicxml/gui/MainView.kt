@@ -41,6 +41,7 @@ class MainView : View("Midi2MusicXML") {
       buttonSelectNeutrino.action {
         val directoryChooser = DirectoryChooser()
         directoryChooser.title = "ディレクトリを選択"
+        directoryChooser.initialDirectory = File(textPathToNeutrino.text)
         val path = directoryChooser.showDialog(this.currentWindow) ?: return@action
         textPathToInputMid.text = path.absolutePath
       }
@@ -49,12 +50,15 @@ class MainView : View("Midi2MusicXML") {
         val chooser = FileChooser()
         chooser.title = "MIDIを選択"
         chooser.extensionFilters.add(FileChooser.ExtensionFilter("MIDI", "*.mid", "*.midi", "*.MID", "*.MIDI"))
+        chooser.initialDirectory = File(textPathToInputMid.text).parentFile
         val path = chooser.showOpenDialog(this.currentWindow) ?: return@action
         textPathToInputMid.text = path.absolutePath
       }
 
       buttonSelectLyric.action {
         val chooser = FileChooser()
+        chooser.extensionFilters.add(FileChooser.ExtensionFilter("MIDI", "*.txt", "*.text", ".md"))
+        chooser.initialDirectory = File(textPathToLyric.text).parentFile
         val path = chooser.showOpenDialog(this.currentWindow) ?: return@action
         textPathToLyric.text = path.absolutePath
       }
@@ -76,6 +80,7 @@ class MainView : View("Midi2MusicXML") {
   }
 
   private fun validate(): Boolean {
+    textMessage.textProperty().unbind()
     textMessage.text = ""
     saveToPreference()
     listOf(textPathToNeutrino.text, textPathToLyric.text, textPathToInputMid.text).forEach {
@@ -90,18 +95,25 @@ class MainView : View("Midi2MusicXML") {
   private fun lazySearchNeutrino() {
     val env = System.getenv()
     var targets = listOf("/Applications", "~/Desktop", "~/Documents", "~/")
+    var neutrinoExt = ""
     if (System.getProperty("os.name").toLowerCase().startsWith("windows")) {
-      targets = listOf(env["HOMEPATH"] ?: "", env["ProgramFiles(x86)"] ?: "", env["ProgramFiles"]
-        ?: "").filter { it.isNotBlank() }
+      neutrinoExt = ".exe"
+      targets = listOf(
+              env["USERPROFILE"] ?: "",
+              env["ProgramFiles(x86)"] ?: "",
+              env["ProgramFiles"] ?: "",
+              env["USERPROFILE"] ?: "" + "\\Desktop").filter { it.isNotBlank() }
     }
     var path = ""
     run {
       targets.forEach {
         val dir = File(it)
         val files = dir.listFiles()
-        val founds = files?.filter { it.name == "NEUTRINO" } ?: return@forEach
+        val founds = files?.filter {
+          it.name == "NEUTRINO"
+        } ?: return@forEach
         if (founds.isNotEmpty() && founds.first().isDirectory) {
-          if (File(founds.first().absolutePath + "/bin/NEUTRINO").exists()) {
+          if (File(founds.first().absolutePath + "/bin/NEUTRINO${neutrinoExt}").exists()) {
             path = founds.first().absolutePath
             return@run
           }
