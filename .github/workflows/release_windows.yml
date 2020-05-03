@@ -29,7 +29,7 @@ jobs:
           path: windows_script
 
       - name: Create Release
-        id: create_release
+        id: create_release_windows
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -40,7 +40,7 @@ jobs:
           prerelease: false
 
       - name: Zip
-        run: powershell compress-archive windows_script midi2musicxml_windows.zip
+        run: powershell compress-archive windows_script/* midi2musicxml_windows.zip
 
       - name: Upload Release Asset
         id: upload-release-asset
