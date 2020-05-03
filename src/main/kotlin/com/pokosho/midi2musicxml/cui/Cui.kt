@@ -2,18 +2,21 @@ package com.pokosho.midi2musicxml.cui
 
 import com.pokosho.midi2musicxml.MidiParser
 import com.pokosho.midi2musicxml.executor.NeutrinoExecutor
+import org.apache.log4j.Logger
 
 /**
  * Command Line Interface.
  * See help()
  */
 class Cui(val args: Array<String>) {
+  private val log: Logger = Logger.getLogger(Cui::class.java)
+
   fun run(): Int {
     val params: Params?
     try {
       params = Params(args, System.`in`)
     } catch (e: IllegalArgumentException) {
-      System.err.println(e.message)
+      log.error(e)
       println(Params.help())
       return -1
     }

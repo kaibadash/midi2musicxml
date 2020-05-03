@@ -1,5 +1,6 @@
 package com.pokosho.midi2musicxml
 
+import org.apache.log4j.Logger
 import java.io.File
 import javax.sound.midi.MetaMessage
 import javax.sound.midi.MidiEvent
@@ -7,6 +8,7 @@ import javax.sound.midi.MidiSystem
 import javax.sound.midi.ShortMessage
 
 class MidiParser {
+  private val log: Logger = Logger.getLogger(MidiParser::class.java)
   val META_TEMPO = 0x51
   val NOTE_ON = 0x90
   val NOTE_OFF = 0x80
@@ -36,18 +38,18 @@ class MidiParser {
 
     for (i in 0 until track.size()) {
       val event: MidiEvent = track.get(i)
-      print("@" + event.tick + " ")
+      log.debug("@" + event.tick + " ")
       val message = event.message
       if (message is MetaMessage && message.type == META_TEMPO) {
         this.tempo = Tempo(message.data)
-        println("Tempo ${tempo.mpq} MPQ")
+        log.debug("Tempo ${tempo.mpq} MPQ")
         continue
       }
       if (!(message is ShortMessage)) {
-        println("Other message: " + message.javaClass)
+        log.debug("Other message: " + message.javaClass)
         continue
       }
-      println("Channel: ${message.channel} ")
+      log.debug("Channel: ${message.channel} ")
       // MIDIは音の終わりと始まりがイベントとして記録される
       if (message.command == NOTE_ON) {
         notes.add(Note(message, this.lyric.charAt(notes.count()), event.tick.toInt()))

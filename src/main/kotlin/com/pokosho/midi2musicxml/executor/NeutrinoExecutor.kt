@@ -1,10 +1,13 @@
 package com.pokosho.midi2musicxml.executor
 
+import org.apache.log4j.Logger
 import java.io.File
 
 class NeutrinoExecutor(val dirNuetrino: String, val pathToMusicXML: String,
                        val singer: Singer = Singer.Kiritan,
                        val pitchShift: Double = 1.0, val formantShift: Double = 1.0) {
+  private val log: Logger = Logger.getLogger(NeutrinoExecutor::class.java)
+
   /**
    * NOTE: 今後NEUTRINOのインタフェースがどうなるかわからないためベタ書き
    */
@@ -18,7 +21,7 @@ class NeutrinoExecutor(val dirNuetrino: String, val pathToMusicXML: String,
     val thread = Runtime.getRuntime().availableProcessors().toString()
     builder.directory(File(dirNuetrino))
     builder.inheritIO()
-    println(builder.command().joinToString(" "))
+    log.debug(builder.command().joinToString(" "))
     var process = builder.start()
     process.waitFor()
 
@@ -33,7 +36,7 @@ class NeutrinoExecutor(val dirNuetrino: String, val pathToMusicXML: String,
     )
     builder.directory(File(dirNuetrino))
     builder.inheritIO()
-    println(builder.command().joinToString(" "))
+    log.debug(builder.command().joinToString(" "))
     process = builder.start()
     process.waitFor()
 
@@ -44,7 +47,7 @@ class NeutrinoExecutor(val dirNuetrino: String, val pathToMusicXML: String,
     )
     builder.directory(File(dirNuetrino))
     builder.inheritIO()
-    println(builder.command().joinToString(" "))
+    log.debug(builder.command().joinToString(" "))
     process = builder.start()
     process.waitFor()
     return output
