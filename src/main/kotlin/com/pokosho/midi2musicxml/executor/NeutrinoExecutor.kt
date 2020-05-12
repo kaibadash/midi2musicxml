@@ -49,7 +49,7 @@ class NeutrinoExecutor(val dirNuetrino: String, val pathToMusicXML: String,
     val process = builder.start()
     process.inputStream.transferTo(outputStream)
     process.waitFor()
-    if (process.exitValue() > 0) 
+    if (process.exitValue() > 0)
   }
 
   /**
