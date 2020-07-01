@@ -165,8 +165,8 @@ class MainViewController {
     }
     lyric = lyric.replace("\r", "").split("\n").joinToString("")
     val executorService = Executors.newSingleThreadExecutor()
-    val task = NeutrinoTask(textPathToNeutrino.text, textPathToInputMid.text, lyric, textMessage.)
-    textMessage.textProperty().bind(task.messageProperty())
+    val task = NeutrinoTask(textPathToNeutrino.text, textPathToInputMid.text, lyric, TextAreaOutputStream(textMessage))
+//    textMessage.textProperty().bind(task.messageProperty())
     executorService.submit(task)
   }
 

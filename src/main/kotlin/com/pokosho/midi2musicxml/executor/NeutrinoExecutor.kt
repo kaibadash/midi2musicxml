@@ -2,14 +2,12 @@ package com.pokosho.midi2musicxml.executor
 
 import org.apache.log4j.Logger
 import java.io.File
-import java.io.FileOutputStream
 import java.io.OutputStream
-import java.nio.file.Files
-import java.nio.file.Paths
 
 class NeutrinoExecutor(val dirNuetrino: String, val pathToMusicXML: String,
                        val singer: Singer = Singer.Kiritan,
-                       val pitchShift: Double = 1.0, val formantShift: Double = 1.0, val outputStream: OutputStreamt) {
+                       val pitchShift: Double = 1.0, val formantShift: Double = 1.0,
+                       var outputStream: OutputStream = System.out) {
   private val log: Logger = Logger.getLogger(NeutrinoExecutor::class.java)
 
   /**
@@ -49,7 +47,9 @@ class NeutrinoExecutor(val dirNuetrino: String, val pathToMusicXML: String,
     val process = builder.start()
     process.inputStream.transferTo(outputStream)
     process.waitFor()
-    if (process.exitValue() > 0)
+    if (process.exitValue() > 0) {
+      throw IllegalCallerException("Failed to execute a command. Check stdout.")
+    }
   }
 
   /**
