@@ -36,7 +36,12 @@ class Cui(val args: Array<String>) {
     parser.generateXML(params.outputPath)
     println("Completed: ${params.outputPath}")
     if (params.neutrinoDir.isNotBlank()) {
-      NeutrinoExecutor(params.neutrinoDir, params.outputPath).execute()
+      try {
+        NeutrinoExecutor(params.neutrinoDir, params.outputPath).execute()
+      } catch (e: IllegalCallerException) {
+        System.err.println(e.message)
+        return -1
+      }
     }
     return 0
   }
