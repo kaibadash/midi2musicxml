@@ -2,10 +2,7 @@ package com.pokosho.midi2musicxml
 
 import org.apache.log4j.Logger
 import java.io.File
-import javax.sound.midi.MetaMessage
-import javax.sound.midi.MidiEvent
-import javax.sound.midi.MidiSystem
-import javax.sound.midi.ShortMessage
+import javax.sound.midi.*
 
 class MidiParser {
   private val log: Logger = Logger.getLogger(MidiParser::class.java)
@@ -33,11 +30,11 @@ class MidiParser {
     if (sequence.tracks.size > 2) {
       warnings.add(Warning(WarningType.MIDI_HASH_SOME_TRACKS, sequence.tracks.size))
     }
-    // 0番目はmeta dataなので1番目を取得
-    val track = sequence.tracks[1]
 
-    for (i in 0 until track.size()) {
-      val event: MidiEvent = track.get(i)
+    // 0番目はmeta dataなので1番目を取得
+    val targetTrack: Track = insertRestIfNeed(sequence, sequence.tracks[1])
+    for (i in 0 until targetTrack.size()) {
+      val event: MidiEvent = targetTrack.get(i)
       log.debug("@" + event.tick + " ")
       val message = event.message
       if (message is MetaMessage && message.type == META_TEMPO) {
@@ -116,5 +113,28 @@ class MidiParser {
       warnings.add(Warning(WarningType.NOTES_TOO_LOW, notesCount()))
     }
     return warnings
+  }
+
+  /**
+   * NEUTRINOにわたす楽譜は先頭が休符で始まっていないと発音されない場合があるため、必要に応じて休符を挿入する
+   */
+  private fun insertRestIfNeed(sequence: Sequence, targetTrack: Track): Track {
+    if (targetTrack.size() == 0) {
+      warnings.add(Warning(WarningType.EMPTY))
+      return targetTrack
+    }
+
+    val firstTrack = targetTrack.get(0)
+    val message = firstTrack.message
+    if (message is ShortMessage && message.command != NOTE_ON) {
+      return targetTrack
+    }
+
+    val trackInsertedRest = sequence.createTrack()
+    trackInsertedRest.add(MidiEvent(MidiMessage("TODO:rest event to bytes"), "TODO: tick length"))
+    for (i in 0 until targetTrack.size()) {
+      trackInsertedRest.add(targetTrack.get(i))
+    }
+    return trackInsertedRest
   }
 }
