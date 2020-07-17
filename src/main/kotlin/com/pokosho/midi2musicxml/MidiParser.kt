@@ -29,7 +29,7 @@ class MidiParser {
     val sequence = MidiSystem.getSequence(File(pathToMidi))
     this.resolution = sequence.resolution
     this.lyric = Lyric.fromString(lyricString)
-    val notes = arrayListOf<Note>()
+    var notes = arrayListOf<BaseNote>()
     if (sequence.tracks.size > 2) {
       warnings.add(Warning(WarningType.MIDI_HASH_SOME_TRACKS, sequence.tracks.size))
     }
@@ -62,9 +62,16 @@ class MidiParser {
       }
     }
 
-    this.notes = RestNote.addRestNotes(notes).map {
+    val notesWithRest = RestNote.addRestNotes(notes).map {
       it.calculateNoteType(resolution)
+    }.toMutableList()
+
+    if (notesWithRest.first() !is RestNote) {
+      warnings.add(Warning(WarningType.START_WITH_NOTE))
+      notesWithRest.add(0, RestNote.fullRest(0, resolution))
     }
+
+    this.notes = notesWithRest
     validate()
   }
 

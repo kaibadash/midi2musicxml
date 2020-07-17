@@ -12,7 +12,7 @@ class RestNote(start: Int, end: Int = 0) : BaseNote(start, end) {
     /**
      * MIDIの空白部分に休符を挿入する
      */
-    fun addRestNotes(notes: List<Note>): List<BaseNote> {
+    fun addRestNotes(notes: List<BaseNote>): List<BaseNote> {
       val notesWithRest = mutableListOf<BaseNote>()
       if (notes.isEmpty()) return notes
       // 先頭が空白のケースを潰しておく
@@ -30,6 +30,13 @@ class RestNote(start: Int, end: Int = 0) : BaseNote(start, end) {
         notesWithRest.add(current)
       }
       return notesWithRest
+    }
+
+    fun fullRest(start: Int, resolution: Int): BaseNote {
+      val rest = RestNote(start)
+      rest.end = start + (resolution * NoteType.NOTE_TYPE_WHOLE.tick()).toInt()
+      rest.noteType = NoteType.NOTE_TYPE_WHOLE
+      return rest
     }
   }
 }
