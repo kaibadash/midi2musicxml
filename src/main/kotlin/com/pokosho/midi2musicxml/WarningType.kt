@@ -8,7 +8,8 @@ enum class WarningType {
   LYRIC_COUNT_NOT_MATCH,
   NOTES_TOO_HIGH,
   NOTES_TOO_LOW,
-  NO_LYRIC
+  NO_LYRIC,
+  START_WITH_NOTE,
 }
 
 class Warning(val warningType: WarningType, vararg values: Any) {
@@ -29,5 +30,3 @@ class Warning(val warningType: WarningType, vararg values: Any) {
     }
   }
 }
-
-/////////
