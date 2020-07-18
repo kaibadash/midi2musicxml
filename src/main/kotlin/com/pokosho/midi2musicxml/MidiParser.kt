@@ -34,7 +34,7 @@ class MidiParser {
       warnings.add(Warning(WarningType.MIDI_HASH_SOME_TRACKS, sequence.tracks.size))
     }
     // 0番目はmeta dataなので1番目を取得
-    val track = sequence.tracks[1]
+    val track = if (sequence.tracks.size > 1) { sequence.tracks[1] } else { sequence.tracks[0] }
 
     for (i in 0 until track.size()) {
       val event: MidiEvent = track.get(i)
@@ -77,7 +77,7 @@ class MidiParser {
 
   fun generateXML(outputPath: String) {
     Render().renderTemplate(
-      "template.musicxml",
+      "template.musicxml",  
       tempo,
       Measure.splitMeasures(
         QUOTES_IN_MEASURE * resolution, notes
