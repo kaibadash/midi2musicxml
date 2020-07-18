@@ -10,8 +10,8 @@ abstract class BaseNote(start: Int, end: Int = 0) {
     this.end = end
   }
 
-  fun calculateNoteType(baseTick: Int): BaseNote {
-    this.noteType = NoteType.toNoteType((end - start) / baseTick.toDouble())
+  fun calculateNoteType(resolution: Int): BaseNote {
+    this.noteType = NoteType.toNoteType((end - start) / resolution.toDouble())
     return this
   }
 

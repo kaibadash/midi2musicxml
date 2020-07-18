@@ -29,12 +29,12 @@ class MidiParser {
     val sequence = MidiSystem.getSequence(File(pathToMidi))
     this.resolution = sequence.resolution
     this.lyric = Lyric.fromString(lyricString)
-    val notes = arrayListOf<Note>()
+    var notes = arrayListOf<BaseNote>()
     if (sequence.tracks.size > 2) {
       warnings.add(Warning(WarningType.MIDI_HASH_SOME_TRACKS, sequence.tracks.size))
     }
     // 0番目はmeta dataなので1番目を取得
-    val track = sequence.tracks[1]
+    val track = if (sequence.tracks.size > 1) { sequence.tracks[1] } else { sequence.tracks[0] }
 
     for (i in 0 until track.size()) {
       val event: MidiEvent = track.get(i)
@@ -62,15 +62,22 @@ class MidiParser {
       }
     }
 
-    this.notes = RestNote.addRestNotes(notes).map {
+    val notesWithRest = RestNote.addRestNotes(notes).map {
       it.calculateNoteType(resolution)
+    }.toMutableList()
+
+    if (notesWithRest.first() !is RestNote) {
+      warnings.add(Warning(WarningType.START_WITH_NOTE))
+      notesWithRest.add(0, RestNote.fullRest(0, resolution))
     }
+
+    this.notes = notesWithRest
     validate()
   }
 
   fun generateXML(outputPath: String) {
     Render().renderTemplate(
-      "template.musicxml",
+      "template.musicxml",  
       tempo,
       Measure.splitMeasures(
         QUOTES_IN_MEASURE * resolution, notes

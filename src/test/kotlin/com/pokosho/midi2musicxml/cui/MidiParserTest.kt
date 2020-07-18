@@ -1,6 +1,7 @@
 package com.pokosho.midi2musicxml.cui
 
 import com.pokosho.midi2musicxml.MidiParser
+import com.pokosho.midi2musicxml.RestNote
 import com.pokosho.midi2musicxml.WarningType
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
@@ -52,6 +53,14 @@ class MidiParserTest {
     val parser = getParser("src/test/resources/test_multi_tracks.mid", "お")
     Assertions.assertEquals(1, parser.warnings.size)
     Assertions.assertEquals(parser.warnings.first().warningType, WarningType.MIDI_HASH_SOME_TRACKS)
+  }
+
+  @Test
+  fun testNoRest() {
+    val parser = getParser("src/test/resources/test_no_rest.mid", "おかか")
+    Assertions.assertEquals(1, parser.warnings.size)
+    Assertions.assertEquals(parser.warnings.first().warningType, WarningType.START_WITH_NOTE)
+    Assertions.assertTrue(parser.notes.first() is RestNote)
   }
 
   @Test
