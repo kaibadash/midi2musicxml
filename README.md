@@ -54,14 +54,14 @@ Just install it.
 ## Build release binaries
 
 ```bash
+vi build.gradle.kts
 git tag v1.2.3
 git push --tags
 ```
 
 ## Contributing
 
-As you like!
-You can post issues and pull requests.
+As you like! You can post issues and pull requests.
 
 ## License
 
