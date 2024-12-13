@@ -51,7 +51,7 @@ Just install it.
 
 [Read me](https://github.com/kaibadash/midi2musicxml/blob/master/windows_script/README.md)
 
-## Build relase binaries
+## Build release binaries
 
 ```bash
 git tag v1.2.3
