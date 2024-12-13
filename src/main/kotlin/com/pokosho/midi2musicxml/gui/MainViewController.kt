@@ -116,7 +116,7 @@ class MainViewController {
     saveToPreference()
     listOf(textPathToNeutrino.text, textPathToLyric.text, textPathToInputMid.text).forEach {
       if (!File(it).exists()) {
-        textMessage.text = "実行に必要なファイル(${textPathToLyric.text})が見つかりませんでした。"
+        textMessage.text = "${i18nBundle.getString("error.not_found")}:${textPathToLyric.text}"
         return false
       }
     }
