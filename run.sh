@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# exmample: ./run.sh output/test.musicxml
+# example: ./run.sh output/test.musicxml
 
 # Project settings
 NEUTRINO_DIR=/Applications/NEUTRINO/0.1
