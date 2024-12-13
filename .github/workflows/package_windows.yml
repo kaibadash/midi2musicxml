@@ -1,3 +1,5 @@
+# @format
+
 name: package_windows
 
 on:
@@ -13,18 +15,20 @@ jobs:
         os: [windows-latest]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Set up JDK
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v3
         with:
-          java-version: 14
+          java-version: "14"
+          distribution: "adopt"
+
       - name: Build with Gradle
         run: ./gradlew shadowJar
+
       - name: Copy
         run: copy build\libs\midi2musicxml*.jar windows_script\
 
-      # A installer needs WIX tool. I was not able to build with GitHub Actions...
-      - uses: actions/upload-artifact@v1
+      - uses: actions/upload-artifact@v3
         with:
           name: Package_${{ matrix.os }}
           path: windows_script
