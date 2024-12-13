@@ -62,7 +62,10 @@ class MainViewController {
       buttonSelectNeutrino.action {
         val directoryChooser = DirectoryChooser()
         directoryChooser.title = i18nBundle.getString("ui.dialog.select_neutrino")
-        directoryChooser.initialDirectory = File(textPathToNeutrino.text)
+        directoryChooser.initialDirectory = File("/")
+        if (textPathToNeutrino.text != "") {
+          directoryChooser.initialDirectory = File(textPathToNeutrino.text)
+        }
         val path = directoryChooser.showDialog(anchorPane.scene.window) ?: return@action
         textPathToNeutrino.text = path.absolutePath
       }
@@ -71,7 +74,10 @@ class MainViewController {
         val chooser = FileChooser()
         chooser.title = i18nBundle.getString("ui.dialog.select_midi")
         chooser.extensionFilters.add(FileChooser.ExtensionFilter("MIDI", "*.mid", "*.midi", "*.MID", "*.MIDI"))
-        chooser.initialDirectory = File(textPathToInputMid.text).parentFile
+        chooser.initialDirectory = File("/")
+        if (textPathToInputMid.text != "") {
+          chooser.initialDirectory = File(textPathToInputMid.text).parentFile
+        }
         val path = chooser.showOpenDialog(anchorPane.scene.window) ?: return@action
         textPathToInputMid.text = path.absolutePath
       }
@@ -80,7 +86,10 @@ class MainViewController {
         val chooser = FileChooser()
         chooser.title = i18nBundle.getString("ui.dialog.select_lyric")
         chooser.extensionFilters.add(FileChooser.ExtensionFilter("MIDI", "*.txt", "*.text", ".md"))
-        chooser.initialDirectory = File(textPathToLyric.text).parentFile
+        chooser.initialDirectory = File("/")
+        if (textPathToLyric.text != "") {
+          chooser.initialDirectory = File(textPathToLyric.text).parentFile
+        }
         val path = chooser.showOpenDialog(anchorPane.scene.window) ?: return@action
         textPathToLyric.text = path.absolutePath
       }
